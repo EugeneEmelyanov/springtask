@@ -1,0 +1,55 @@
+{
+	"users": [
+		{
+			"email": "Lars_Ulrich@epam.com",
+			"name": "Lars Ulrich",
+			"birthday": "1988-03-19"
+		},
+		{
+			"email": "James_Hetfiled@epam.com",
+			"name": "James Hetfiled",
+			"birthday": "1968-03-13"
+		},
+		{
+			"email": "Kirk_Hammet@epam.com",
+			"name": "Kirk Hammet",
+			"birthday": "1972-03-18"
+		},
+		{
+			"email": "Robert_Trujillo@epam.com",
+			"name": "Robert Trujillo",
+			"birthday": "1964-08-13"
+		}
+	],
+	"events": [
+
+		{
+			"name": "And Justice for All",
+			"rate": "MID",
+			"basePrice": "22",
+			"dateTime": "2016-04-11T21:18",
+			"auditorium": 1
+		},
+			{
+			"name": "Kill 'Em All",
+			"rate": "HIGH",
+			"basePrice": "25",
+			"dateTime": "2026-08-05T21:18",
+			"auditorium": 2
+		},
+		{
+			"name": "Ride the lightning",
+			"rate": "HIGH",
+			"basePrice": "25",
+			"dateTime": "2016-08-10T21:18",
+			"auditorium": 3
+		},
+		{
+			"name": "S&M",
+			"rate": "HIGH",
+			"basePrice": "25",
+			"dateTime": "2015-08-05T21:18",
+			"auditorium": 2
+		}
+	]
+}
