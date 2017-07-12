@@ -69,7 +69,7 @@ public class DataLoader {
                 .withEmail(email)
                 .withBirthday(LocalDate.now())
                 .withPassword("12345")
-                .withUserRoles(Roles.REGISTERED_USER.name())
+                .withUserRoles(Roles.REGISTERED_USER.getAuthority() + "," + Roles.BOOKING_MANAGER.getAuthority())
                 .build()
         );
         userService.register(User.newBuilder()
@@ -77,7 +77,7 @@ public class DataLoader {
                 .withEmail("yy")
                 .withBirthday(LocalDate.of(1992, 4, 29))
                 .withPassword("12345")
-                .withUserRoles(String.join(",", new String[]{Roles.BOOKING_MANAGER.name(), Roles.REGISTERED_USER.name()}))
+                .withUserRoles(Roles.REGISTERED_USER.getAuthority())
                 .build());
 
 

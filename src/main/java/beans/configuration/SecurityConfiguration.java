@@ -1,5 +1,7 @@
 package beans.configuration;
 
+import beans.security.Roles;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -11,9 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.AbstractPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
 /**
  * Created by yauhen_yemelyanau on 7/10/17.
@@ -21,6 +21,9 @@ import org.springframework.security.crypto.password.StandardPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    private static final String HAS_REGISTERED_USER_ROLE = "hasAuthority('" + Roles.REGISTERED_USER.getAuthority() + "')";
+    private static final String HAS_BOOKING_MANAGER_ROLE = "hasAuthority('" + Roles.BOOKING_MANAGER.getAuthority() + "')";
 
     @Autowired
     @Qualifier("userDetailsService")
@@ -39,21 +42,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/ticket/**").access("hasRole('REGISTERED_USER')")
-                .antMatchers("/event/**").access("hasRole('REGISTERED_USER')")
-                .antMatchers("/auditorium/**").access("hasRole('REGISTERED_USER')")
-                .antMatchers("ticket/**").access("hasRole('REGISTERED_USER')")
-                .antMatchers("/ticket/{\\d}").access("hasRole('BOOKING_MANAGER') or hasRole('REGISTERED_USER')")
+                .antMatchers("/event/**").hasAuthority(Roles.REGISTERED_USER.getAuthority())
+                .antMatchers("/auditorium/**").access(HAS_REGISTERED_USER_ROLE)
+                .antMatchers("/home").access(HAS_REGISTERED_USER_ROLE)
+                .antMatchers("/ticket/list").access(HAS_BOOKING_MANAGER_ROLE)
+                .antMatchers("/ticket/{\\d}").access(HAS_REGISTERED_USER_ROLE)
                 .and()
                 .formLogin()
-                    .loginPage("/login")
-                    .loginProcessingUrl("/perform_login")
-                    .defaultSuccessUrl("/home",true)
-                    .failureUrl("/login?error=true")
+                .loginPage("/login")
+                .loginProcessingUrl("/perform_login")
+                .defaultSuccessUrl("/home", true)
+                .failureUrl("/login?error=true")
                 .and()
-                    .logout()
-                    .logoutSuccessUrl("/logout")
-                    .permitAll(true);
+                .logout()
+                .logoutUrl("/logout")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/login")
+                .permitAll(true);
 
         //TODO:fixme. Should be enabled however does not work for MacOs.
         http.csrf().disable();
