@@ -1,21 +1,27 @@
 <html>
-<head></head>
+<head>
+   <title>Log in</title>
+   <#include "resources/scripts.ftl">
+   <link rel="stylesheet" type="text/css" href="/resources/static/login.css">
+</head>
 <body>
-   <h1>Login</h1>
-   <form name='f' action="perform_login" method='POST'>
-      <table>
-         <tr>
-            <td>User:</td>
-            <td><input type='text' name='username' value=''></td>
-         </tr>
-         <tr>
-            <td>Password:</td>
-            <td><input type='password' name='password' /></td>
-         </tr>
-         <tr>
-            <td><input name="submit" type="submit" value="submit" /></td>
-         </tr>
-      </table>
-  </form>
+
+   <div class="container">
+      <form class="form-signin" method="POST" action="perform_login">
+         <h2 class="form-signin-heading">Please log in</h2>
+         <label for="inputEmail" class="sr-only">Email address</label>
+         <input id="inputEmail" name="username" class="form-control" placeholder="Email address" required autofocus>
+         <label for="inputPassword" class="sr-only">Password</label>
+         <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+         <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me">Remember me
+         </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+   </form>
+
+</div> <!-- /container -->
+
 </body>
 </html>
