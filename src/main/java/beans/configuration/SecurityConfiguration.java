@@ -29,12 +29,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Qualifier("userDetailsService")
     private UserDetailsService userDetailsService;
 
-
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication().withUser("mkyong").password("123456").roles();
-//        auth.inMemoryAuthentication().withUser("admin").password("123456").roles("REGISTERED_USER");
-//        auth.inMemoryAuthentication().withUser("dba").password("123456").roles("BOOKING_MANAGER", "REGISTERED_USER");
         auth.userDetailsService(userDetailsService);
     }
 
@@ -61,6 +57,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/login")
                 .permitAll(true);
+
+        http.rememberMe()
+                .key("remember-me-key")
+                .tokenValiditySeconds(86400)
+                .rememberMeCookieName("remember-me-cookie");
 
         //TODO:fixme. Should be enabled however does not work for MacOs.
         http.csrf().disable();

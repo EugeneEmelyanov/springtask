@@ -13,8 +13,7 @@
         <h4>Name: ${auditorium.name}</h4>
         <div class="mt-4">Number of seats: ${auditorium.seatsNumber}</div>
         <div class="pt-4">Vip seats: ${auditorium.vipSeats}</div>
-        <a class="btn pt-4 btn-primary"
-        href="/event?auditoriumName=${auditorium.name}">See events in ${auditorium.name}</a>
+        <a class="btn pt-4 btn-primary" Phref="/event?auditoriumName=${auditorium.name}">See events in ${auditorium.name}</a>
     </div>
     </#list>
 
