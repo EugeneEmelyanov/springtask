@@ -14,6 +14,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.session.InvalidSessionAccessDeniedHandler;
+import org.springframework.security.web.session.InvalidSessionStrategy;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Created by yauhen_yemelyanau on 7/10/17.
@@ -63,12 +70,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .tokenValiditySeconds(86400)
                 .rememberMeCookieName("remember-me-cookie");
 
+        http.sessionManagement()
+                .maximumSessions(1);
+
+
         //TODO:fixme. Should be enabled however does not work for MacOs.
         http.csrf().disable();
 
     }
 
+    @Autowired
+    public void configureAuthentication(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(authenticationProvider());
+    }
+
     @Bean
+    @Autowired
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider
                 = new DaoAuthenticationProvider();
@@ -77,8 +94,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return authProvider;
     }
 
-    protected PasswordEncoder getEncoder() {
-        return new BCryptPasswordEncoder(11);
-
+    @Bean(name="passwordEncoder")
+    BCryptPasswordEncoder getEncoder() {
+        return new BCryptPasswordEncoder();
     }
+
+
 }
