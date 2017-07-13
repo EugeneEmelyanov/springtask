@@ -11,7 +11,6 @@
 
     <properties>
         <spring.ver>4.2.4.RELEASE</spring.ver>
-        <aspectj.ver>1.8.8</aspectj.ver>
         <hibernate.ver>5.1.0.Final</hibernate.ver>
         <h2.ver>1.4.191</h2.ver>
         <freemarker.ver>2.3.19</freemarker.ver>
@@ -72,11 +71,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
             <version>${spring.ver}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectj.ver}</version>
         </dependency>
 
         <dependency>
