@@ -90,13 +90,13 @@ public class TestBookingServiceConfiguration {
 
     @Bean
     public Ticket testTicket1() {
-        return new Ticket(1, testEvent1(), java.time.LocalDateTime.of(2016, 2, 6, 14, 45, 0), Arrays.asList(3, 4),
+        return new Ticket(1, testEvent1(), Arrays.asList(3, 4),
                 testUser1(), 32D);
     }
 
     @Bean
     public Ticket testTicket2() {
-        return new Ticket(2, testEvent2(), java.time.LocalDateTime.of(2016, 2, 7, 14, 45, 0), Arrays.asList(1, 2),
+        return new Ticket(2, testEvent2(), Arrays.asList(1, 2),
                 testUser1(), 123D);
     }
 

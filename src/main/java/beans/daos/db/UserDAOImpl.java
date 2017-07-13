@@ -19,7 +19,8 @@ import java.util.Objects;
  * Time: 4:35 PM
  */
 @Repository(value = "userDAO")
-public class UserDAOImpl extends AbstractDAO implements UserDAO {
+public class
+UserDAOImpl extends AbstractDAO implements UserDAO {
 
     @Autowired
     @Qualifier("passwordEncoder")

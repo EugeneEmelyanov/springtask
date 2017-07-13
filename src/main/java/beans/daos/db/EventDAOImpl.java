@@ -42,6 +42,11 @@ public class EventDAOImpl extends AbstractDAO implements EventDAO {
     }
 
     @Override
+    public Event getById(long id) {
+        return getCurrentSession().get(Event.class, id);
+    }
+
+    @Override
     public Event get(String eventName, Auditorium auditorium, LocalDateTime dateTime) {
         LogicalExpression nameAndDate = Restrictions.and(Restrictions.eq("dateTime", dateTime),
                                                          Restrictions.eq("name", eventName));

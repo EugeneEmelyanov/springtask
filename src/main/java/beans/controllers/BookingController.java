@@ -109,7 +109,7 @@ public class BookingController {
         Event event = eventService.getEvent(eventName, auditorium, eventDate);
 
 
-        Ticket t = bookingService.bookTicket(user, new Ticket(event, LocalDateTime.now(), seats, user,
+        Ticket t = bookingService.bookTicket(user, new Ticket(event, seats, user,
                 bookingService.getTicketPrice(event.getName(),
                         event.getAuditorium().getName(),
                         event.getDateTime(), seats,

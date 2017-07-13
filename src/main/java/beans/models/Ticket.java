@@ -1,8 +1,10 @@
 package beans.models;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import util.CsvUtil;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -13,28 +15,26 @@ import java.util.List;
  */
 public class Ticket {
 
-    private long          id;
-    private Event         event;
-    private LocalDateTime dateTime;
-    private String        seats;
-    private User          user;
-    private Double        price;
+    private long id;
+    private Event event;
+    private String seats;
+    private User user;
+    private Double price;
 
     public Ticket() {
     }
 
-    public Ticket(Event event, LocalDateTime dateTime, List<Integer> seats, User user, double price) {
-        this(-1, event, dateTime, seats, user, price);
+    public Ticket(Event event, List<Integer> seats, User user, double price) {
+        this(-1, event, seats, user, price);
     }
 
-    public Ticket(long id, Event event, LocalDateTime dateTime, List<Integer> seats, User user, Double price) {
-        this(id, event, dateTime, CsvUtil.fromListToCsv(seats), user, price);
+    public Ticket(long id, Event event, List<Integer> seats, User user, Double price) {
+        this(id, event, CsvUtil.fromListToCsv(seats), user, price);
     }
 
-    public Ticket(long id, Event event, LocalDateTime dateTime, String seats, User user, Double price) {
+    public Ticket(long id, Event event, String seats, User user, Double price) {
         this.id = id;
         this.event = event;
-        this.dateTime = dateTime;
         this.user = user;
         this.price = price;
         this.seats = seats;
@@ -56,14 +56,6 @@ public class Ticket {
         this.event = event;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
     public String getSeats() {
         return seats;
     }
@@ -77,7 +69,7 @@ public class Ticket {
     }
 
     public List<Integer> getSeatsList() {
-        return CsvUtil.fromCsvToList(seats, Integer:: valueOf);
+        return CsvUtil.fromCsvToList(seats, Integer::valueOf);
     }
 
     public User getUser() {
@@ -105,41 +97,35 @@ public class Ticket {
 
         Ticket ticket = (Ticket) o;
 
-        if (event != null ? !event.equals(ticket.event) : ticket.event != null)
-            return false;
-        if (dateTime != null ? !dateTime.equals(ticket.dateTime) : ticket.dateTime != null)
-            return false;
-        if (seats != null ? !seats.equals(ticket.seats) : ticket.seats != null)
-            return false;
-        if (user != null ? !user.equals(ticket.user) : ticket.user != null)
-            return false;
-        return price != null ? price.equals(ticket.price) : ticket.price == null;
-
+        return new EqualsBuilder()
+                .append(event, ticket.event)
+                .append(seats, ticket.seats)
+                .append(user, ticket.user)
+                .append(price, ticket.price)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        int result = event != null ? event.hashCode() : 0;
-        result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
-        result = 31 * result + (seats != null ? seats.hashCode() : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        return result;
+        return new HashCodeBuilder(11, 17)
+                .append(event)
+                .append(seats)
+                .append(user)
+                .append(price)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
-        return "Ticket{" +
-               "id=" + id +
-               ", event=" + event +
-               ", dateTime=" + dateTime +
-               ", seats=" + seats +
-               ", user=" + user +
-               ", price=" + price +
-               '}';
+        return new ToStringBuilder(this)
+                .append(event)
+                .append(seats)
+                .append(user)
+                .append(price)
+                .toString();
     }
 
     public Ticket withId(Long ticketId) {
-        return new Ticket(ticketId, event, dateTime, seats, user, price);
+        return new Ticket(ticketId, event, seats, user, price);
     }
 }
