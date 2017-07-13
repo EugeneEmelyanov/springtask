@@ -5,11 +5,15 @@ import beans.daos.mocks.BookingDAOBookingMock;
 import beans.daos.mocks.UserDAOMock;
 import beans.models.Ticket;
 import beans.models.User;
+import beans.security.Roles;
 import beans.services.UserService;
 import beans.services.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -23,12 +27,30 @@ public class TestUserServiceConfiguration {
 
     @Bean
     public User testUser1() {
-        return new User(0, "dmitriy.vbabichev@gmail.com", "Dmytro Babichev", java.time.LocalDate.of(1992, 4, 29));
+
+        return User.newBuilder()
+                .withId(0l)
+                .withName("Eugene Yemelyanau")
+                .withEmail("a@a.co")
+                .withUserRoles(Roles.REGISTERED_USER.getAuthority())
+                .withPassword("123")
+                .withBirthday(LocalDate.of(1988, 4, 29)).build();
     }
 
     @Bean
     public User testUser2() {
-        return new User(1, "laory@yandex.ru", "Dmytro Babichev", java.time.LocalDate.of(1992, 4, 29));
+        return User.newBuilder()
+                .withId(1l)
+                .withName("Arkady Dobkin")
+                .withEmail("b@b.co")
+                .withUserRoles(String.join(",", new String[]{Roles.BOOKING_MANAGER.getAuthority(), Roles.REGISTERED_USER.getAuthority()}))
+                .withPassword("123")
+                .withBirthday(LocalDate.of(1962, 4, 29)).build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

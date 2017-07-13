@@ -1,5 +1,6 @@
 package beans.daos.mocks;
 
+import beans.daos.AuditoriumDAO;
 import beans.daos.db.AuditoriumDAOImpl;
 import beans.models.Auditorium;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * Date: 06/2/16
  * Time: 1:27 PM
  */
-public class DBAuditoriumDAOMock extends AuditoriumDAOImpl {
+public class DBAuditoriumDAOMock implements AuditoriumDAO {
 
     private final List<Auditorium> auditoriums;
 
@@ -20,11 +21,32 @@ public class DBAuditoriumDAOMock extends AuditoriumDAOImpl {
     }
 
     public void init() {
-        cleanup();
-        auditoriums.forEach(this :: add);
     }
 
     public void cleanup() {
-        getAll().forEach(this :: delete);
+
+    }
+
+    @Override
+    public List<Auditorium> getAll() {
+        return auditoriums;
+    }
+
+    @Override
+    public Auditorium getByName(String name) {
+        return auditoriums.stream()
+                .filter(auditorium -> auditorium.getName().equals(name))
+                .findFirst().get();
+    }
+
+    @Override
+    public void delete(Auditorium auditorium) {
+        auditoriums.remove(auditorium);
+    }
+
+    @Override
+    public Auditorium add(Auditorium auditorium) {
+         auditoriums.add(auditorium);
+         return auditorium;
     }
 }

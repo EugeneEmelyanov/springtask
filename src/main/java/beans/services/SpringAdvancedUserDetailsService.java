@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * Created by yauhen_yemelyanau on 7/11/17.
@@ -45,7 +46,8 @@ public class SpringAdvancedUserDetailsService implements UserDetailsService {
 
         @Override
         public String getPassword() {
-            return user.getPassword();
+
+            return Objects.isNull(user) ? null : user.getPassword();
         }
 
         @Override

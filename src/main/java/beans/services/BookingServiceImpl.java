@@ -26,21 +26,19 @@ import java.util.stream.Collectors;
 @Transactional
 public class BookingServiceImpl implements BookingService {
 
-    private final EventService      eventService;
+    private final EventService eventService;
     private final AuditoriumService auditoriumService;
-    private final UserService       userService;
-    private final BookingDAO        bookingDAO;
-    private final DiscountService   discountService;
-    final         int               minSeatNumber;
-    final         double            vipSeatPriceMultiplier;
-    final         double            highRatedPriceMultiplier;
-    final         double            defaultRateMultiplier;
+    private final UserService userService;
+    private final BookingDAO bookingDAO;
+    final int minSeatNumber;
+    final double vipSeatPriceMultiplier;
+    final double highRatedPriceMultiplier;
+    final double defaultRateMultiplier;
 
     @Autowired
     public BookingServiceImpl(@Qualifier("eventServiceImpl") EventService eventService,
                               @Qualifier("auditoriumServiceImpl") AuditoriumService auditoriumService,
                               @Qualifier("userServiceImpl") UserService userService,
-                              @Qualifier("discountServiceImpl") DiscountService discountService,
                               @Qualifier("bookingDAO") BookingDAO bookingDAO,
                               @Value("${min.seat.number}") int minSeatNumber,
                               @Value("${vip.seat.price.multiplier}") double vipSeatPriceMultiplier,
@@ -50,7 +48,6 @@ public class BookingServiceImpl implements BookingService {
         this.auditoriumService = auditoriumService;
         this.userService = userService;
         this.bookingDAO = bookingDAO;
-        this.discountService = discountService;
         this.minSeatNumber = minSeatNumber;
         this.vipSeatPriceMultiplier = vipSeatPriceMultiplier;
         this.highRatedPriceMultiplier = highRatedPriceMultiplier;
@@ -79,20 +76,19 @@ public class BookingServiceImpl implements BookingService {
         if (Objects.isNull(event)) {
             throw new IllegalStateException(
                     "There is no event with name: [" + eventName + "] in auditorium: [" + auditorium + "] on date: ["
-                    + dateTime + "]");
+                            + dateTime + "]");
         }
 
         final double baseSeatPrice = event.getBasePrice();
         final double rateMultiplier = event.getRate() == Rate.HIGH ? highRatedPriceMultiplier : defaultRateMultiplier;
         final double seatPrice = baseSeatPrice * rateMultiplier;
         final double vipSeatPrice = vipSeatPriceMultiplier * seatPrice;
-        final double discount = discountService.getDiscount(user, event);
 
 
         validateSeats(seats, auditorium);
 
         final List<Integer> auditoriumVipSeats = auditorium.getVipSeatsList();
-        final List<Integer> vipSeats = auditoriumVipSeats.stream().filter(seats:: contains).collect(
+        final List<Integer> vipSeats = auditoriumVipSeats.stream().filter(seats::contains).collect(
                 Collectors.toList());
         final List<Integer> simpleSeats = seats.stream().filter(seat -> !vipSeats.contains(seat)).collect(
                 Collectors.toList());
@@ -111,9 +107,8 @@ public class BookingServiceImpl implements BookingService {
         //        System.out.println("simpleSeats.size() = " + simpleSeats.size());
         //        System.out.println("vipSeats.size() = " + vipSeats.size());
 
-        final double totalPrice = simpleSeatsPrice + vipSeatsPrice;
+        return simpleSeatsPrice + vipSeatsPrice;
 
-        return (1.0 - discount) * totalPrice;
     }
 
     private void validateSeats(List<Integer> seats, Auditorium auditorium) {
@@ -123,7 +118,7 @@ public class BookingServiceImpl implements BookingService {
         incorrectSeat.ifPresent(seat -> {
             throw new IllegalArgumentException(
                     String.format("Seat: [%s] is incorrect. Auditorium: [%s] has [%s] seats", seat, auditorium.getName(),
-                                  seatsNumber));
+                            seatsNumber));
         });
     }
 
@@ -139,7 +134,7 @@ public class BookingServiceImpl implements BookingService {
 
         List<Ticket> bookedTickets = bookingDAO.getTickets(ticket.getEvent());
         boolean seatsAreAlreadyBooked = bookedTickets.stream().filter(bookedTicket -> ticket.getSeatsList().stream().filter(
-                bookedTicket.getSeatsList() :: contains).findAny().isPresent()).findAny().isPresent();
+                bookedTicket.getSeatsList()::contains).findAny().isPresent()).findAny().isPresent();
 
         if (!seatsAreAlreadyBooked)
             bookingDAO.create(user, ticket);
