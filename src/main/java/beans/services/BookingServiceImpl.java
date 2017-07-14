@@ -1,6 +1,7 @@
 package beans.services;
 
 import beans.daos.BookingDAO;
+import beans.daos.EventDAO;
 import beans.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,7 +27,6 @@ import java.util.stream.Collectors;
 @Transactional
 public class BookingServiceImpl implements BookingService {
 
-    private final EventService eventService;
     private final AuditoriumService auditoriumService;
     private final UserService userService;
     private final BookingDAO bookingDAO;
@@ -36,7 +36,11 @@ public class BookingServiceImpl implements BookingService {
     final double defaultRateMultiplier;
 
     @Autowired
-    public BookingServiceImpl(@Qualifier("eventServiceImpl") EventService eventService,
+    @Qualifier("eventDAO")
+    private EventDAO eventDAO;
+
+    @Autowired
+    public BookingServiceImpl(
                               @Qualifier("auditoriumServiceImpl") AuditoriumService auditoriumService,
                               @Qualifier("userServiceImpl") UserService userService,
                               @Qualifier("bookingDAO") BookingDAO bookingDAO,
@@ -44,7 +48,6 @@ public class BookingServiceImpl implements BookingService {
                               @Value("${vip.seat.price.multiplier}") double vipSeatPriceMultiplier,
                               @Value("${high.rate.price.multiplier}") double highRatedPriceMultiplier,
                               @Value("${def.rate.price.multiplier}") double defaultRateMultiplier) {
-        this.eventService = eventService;
         this.auditoriumService = auditoriumService;
         this.userService = userService;
         this.bookingDAO = bookingDAO;
@@ -72,12 +75,18 @@ public class BookingServiceImpl implements BookingService {
 
         final Auditorium auditorium = auditoriumService.getByName(auditoriumName);
 
-        final Event event = eventService.getEvent(eventName, auditorium, dateTime);
+        final Event event = eventDAO.get(eventName, auditorium, dateTime);
         if (Objects.isNull(event)) {
             throw new IllegalStateException(
                     "There is no event with name: [" + eventName + "] in auditorium: [" + auditorium + "] on date: ["
                             + dateTime + "]");
         }
+
+        return getTicketPrice(event, seats);
+
+    }
+
+    private double getTicketPriceByEvent(Event event, List<Integer> seats) {
 
         final double baseSeatPrice = event.getBasePrice();
         final double rateMultiplier = event.getRate() == Rate.HIGH ? highRatedPriceMultiplier : defaultRateMultiplier;
@@ -85,9 +94,9 @@ public class BookingServiceImpl implements BookingService {
         final double vipSeatPrice = vipSeatPriceMultiplier * seatPrice;
 
 
-        validateSeats(seats, auditorium);
+        validateSeats(seats, event.getAuditorium());
 
-        final List<Integer> auditoriumVipSeats = auditorium.getVipSeatsList();
+        final List<Integer> auditoriumVipSeats = event.getAuditorium().getVipSeatsList();
         final List<Integer> vipSeats = auditoriumVipSeats.stream().filter(seats::contains).collect(
                 Collectors.toList());
         final List<Integer> simpleSeats = seats.stream().filter(seat -> !vipSeats.contains(seat)).collect(
@@ -96,19 +105,7 @@ public class BookingServiceImpl implements BookingService {
         final double simpleSeatsPrice = simpleSeats.size() * seatPrice;
         final double vipSeatsPrice = vipSeats.size() * vipSeatPrice;
 
-        //        System.out.println("auditoriumVipSeats = " + auditoriumVipSeats);
-        //        System.out.println("baseSeatPrice = " + baseSeatPrice);
-        //        System.out.println("rateMultiplier = " + rateMultiplier);
-        //        System.out.println("vipSeatPriceMultiplier = " + vipSeatPriceMultiplier);
-        //        System.out.println("seatPrice = " + seatPrice);
-        //        System.out.println("vipSeatPrice = " + vipSeatPrice);
-        //        System.out.println("discount = " + discount);
-        //        System.out.println("seats = " + seats);
-        //        System.out.println("simpleSeats.size() = " + simpleSeats.size());
-        //        System.out.println("vipSeats.size() = " + vipSeats.size());
-
-        return simpleSeatsPrice + vipSeatsPrice;
-
+        return simpleSeatsPrice + vipSeatPrice;
     }
 
     private void validateSeats(List<Integer> seats, Auditorium auditorium) {
@@ -147,8 +144,18 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<Ticket> getTicketsForEvent(String event, String auditoriumName, LocalDateTime date) {
         final Auditorium auditorium = auditoriumService.getByName(auditoriumName);
-        final Event foundEvent = eventService.getEvent(event, auditorium, date);
+        final Event foundEvent = eventDAO.get(event, auditorium, date);
         return bookingDAO.getTickets(foundEvent);
+    }
+
+    @Override
+    public List<Ticket> getTicketsForEvent(Event event) {
+        return bookingDAO.getTickets(event);
+    }
+
+    @Override
+    public double getTicketPrice(Event event, List<Integer> seats) {
+        return getTicketPriceByEvent(event, seats);
     }
 
 }

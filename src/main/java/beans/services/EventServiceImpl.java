@@ -1,6 +1,5 @@
 package beans.services;
 
-import beans.daos.BookingDAO;
 import beans.daos.EventDAO;
 import beans.dto.EventSeatsDTO;
 import beans.models.Auditorium;
@@ -13,9 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -34,8 +31,8 @@ public class EventServiceImpl implements EventService {
     private int minSeatNumber;
 
     @Autowired
-    @Qualifier("bookingDAO")
-    private BookingDAO bookingDAO;
+    @Qualifier("bookingServiceImpl")
+    private BookingService bookingService;
 
     @Autowired
     public EventServiceImpl(@Qualifier("eventDAO") EventDAO eventDAO) {
@@ -65,13 +62,13 @@ public class EventServiceImpl implements EventService {
         Objects.requireNonNull(event, "Cannot find event with id=" + eventId);
 
 
-        List<Ticket> bookedTickets = bookingDAO.getTickets(event);
+        List<Ticket> bookedTickets = bookingService.getTicketsForEvent(event);
 
 
-        event.getAuditorium().
+        return addVipSeatsAvailability(event, bookedTickets,
+                addRegularSeatsAvailability(event, bookedTickets, EventSeatsDTO.newBuilder()
+                .withEvent(event))).build();
 
-        boolean seatsAreAlreadyBooked = bookedTickets.stream().filter(bookedTicket -> ticket.getSeatsList().stream().filter(
-                bookedTicket.getSeatsList()::contains).findAny().isPresent()).findAny().isPresent();
     }
 
     public Event getEvent(String name, Auditorium auditorium, LocalDateTime dateTime) {
@@ -95,12 +92,59 @@ public class EventServiceImpl implements EventService {
         return eventDAO.update(updatedEvent);
     }
 
-    private boolean isRegularSeatsAvailable(Event event, List<Ticket> bookedTickets ) {
+    private EventSeatsDTO.Builder addRegularSeatsAvailability(Event event, List<Ticket> bookedTickets, EventSeatsDTO.Builder builder) {
         HashSet<Integer> occupiedSeats = bookedTickets.stream()
                 .map(ticket -> ticket.getSeatsList())
                 .flatMap(seats -> seats.stream())
                 .collect(Collectors.toCollection(HashSet::new));
 
-        for(int seat = )
+        int numSeats = 0;
+        int firstAvailable = -1;
+        List<Integer> seats = new LinkedList<>();
+        for (int seat = minSeatNumber+1; seat < event.getAuditorium().getSeatsNumber(); seat++) {
+            if (!occupiedSeats.contains(seat)) {
+                numSeats += 1;
+                firstAvailable = seat;
+                seats.add(seat);
+            }
+        }
+
+        double regularPrice = Double.NEGATIVE_INFINITY;
+
+        if (firstAvailable != -1) {
+            regularPrice = bookingService.getTicketPrice(event, Arrays.asList(firstAvailable));
+        }
+
+
+        builder.withRegularPrice(regularPrice)
+                .withNumRegularSeats(numSeats)
+                .withRegularSeats(seats);
+
+        return builder;
+    }
+
+    private EventSeatsDTO.Builder addVipSeatsAvailability(Event event, List<Ticket> bookedTickets, EventSeatsDTO.Builder builder) {
+        HashSet<Integer> occupiedSeats = bookedTickets.stream()
+                .map(ticket -> ticket.getSeatsList())
+                .flatMap(seats -> seats.stream())
+                .collect(Collectors.toCollection(HashSet::new));
+
+        List<Integer> seats = event.getAuditorium().getVipSeatsList()
+                .stream()
+                .filter(i -> !occupiedSeats.contains(i))
+                .collect(Collectors.toList());
+
+        int vipSeat = seats.isEmpty() ? -1 : seats.get(0);
+        double vipSeatPrice = Double.NEGATIVE_INFINITY;
+
+        if (vipSeat != -1) {
+            vipSeatPrice = bookingService.getTicketPrice(event, Arrays.asList(vipSeat));
+        }
+
+        builder.withVipPrice(vipSeatPrice)
+                .withNumVipSeats(seats.size())
+                .withVipSeats(seats);
+
+        return builder;
     }
 }

@@ -1,7 +1,5 @@
 package beans.controllers;
 
-import beans.models.Event;
-import beans.models.Ticket;
 import beans.services.EventService;
 import beans.services.UserService;
 import beans.views.TicketsPdfView;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -32,11 +29,9 @@ public class TicketController {
     private UserService userService;
 
     @Autowired
-    @Qualifier("bookingServiceImpl")
+    @Qualifier("eventServiceImpl")
     private EventService eventService;
 
-    @Autowired
-    @Qualifier("bookingServiceImpl")
 
     @RequestMapping(path = "/list", headers = {"Accept=application/pdf"})
     public ModelAndView showTicketsPDF() {

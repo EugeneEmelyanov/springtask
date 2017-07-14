@@ -1,5 +1,6 @@
 package beans.controllers;
 
+import beans.dto.EventSeatsDTO;
 import beans.models.Auditorium;
 import beans.models.Event;
 import beans.models.Ticket;
@@ -12,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -43,16 +45,11 @@ public class EventController {
     private BookingService bookingService;
 
     @RequestMapping("/{id}/tickets")
-    public String showEventTickets(@RequestParam("id") long eventId,
+    public String showEventTickets(@PathVariable("id") long eventId,
                                    @ModelAttribute("model") ModelMap model) {
 
-        Event event = eventService.getById(eventId);
-        Objects.requireNonNull(event, "No event found for id " + eventId);
-
-        List<Ticket> bookedTickets = bookingService.getTicketsForEvent(event.getName(),
-                event.getAuditorium().getName(), event.getDateTime());
-
-        String vipSeats =
+        EventSeatsDTO seatsAvailability = eventService.getSeatsAvailability(eventId);
+        model.addAttribute("eventTickets", seatsAvailability);
 
         return EVENT_TICKETS_VIEW;
     }
