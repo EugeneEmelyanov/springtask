@@ -16,6 +16,7 @@
                     <th>Base Price</th>
                     <th>Auditorium</th>
                     <th>Date Time</th>
+                    <th>Tickets</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,6 +30,7 @@
                         <td>${event.basePrice}</td>
                         <td><a href="/auditorium/list?name=${event.auditorium.name}">${event.auditorium.name}</a></td>
                         <td>${event.dateTime}</td>
+                        <td><a class="btn btn-info" href="/event/${event.id}/tickets">Tickets</a>
                     </tr>
                     </#list>
                 </tbody>

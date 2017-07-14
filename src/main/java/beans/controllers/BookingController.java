@@ -114,8 +114,7 @@ public class BookingController {
                         event.getDateTime(), seats,
                         user)));
 
-        response.getOutputStream().println(String.format("Ticket is succesfully booked, here are the details: %s", t));
-        response.getOutputStream().close();
+        response.sendRedirect("/ticket/" + user.getId());
     }
 
     @RequestMapping("/tickets")

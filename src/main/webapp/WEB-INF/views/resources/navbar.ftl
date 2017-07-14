@@ -9,8 +9,9 @@
 <li><a href="/user/list">Users</a></li>
 <li><a href="/ticket/list">Tickets</a></li>
 </ul>
-<button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#myModal">Upload Events and Users</button>
-<a type="button" class="btn btn-info btn pull-right" href="/logout">Logout</a>
+<a type="button" class="btn btn-info btn pull-right align-middle" style="margin: 5px 0" href="/logout">Logout</a>
+<button type="button" class="btn btn-info btn pull-right" style="margin: 5px 10px" data-toggle="modal" data-target="#myModal">Upload Events and Users</button>
+
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">

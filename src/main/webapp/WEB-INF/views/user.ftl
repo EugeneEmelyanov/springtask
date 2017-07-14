@@ -12,8 +12,9 @@
            <i class="glyphicon glyphicon-envelope"></i>  ${model.user.email}<br/>
 
            <i class="glyphicon glyphicon-gift"></i>  ${model.user.birthday}</p>
+             <a class="btn btn-primary"
+                  href="/ticket/${model.user.id}">See booked tickets</a>
        </div>
-       <a class="btn btn-primary"
-       href="/ticket/${model.user.id}">See booked tickets</a>
+
 </body>
 </html>
