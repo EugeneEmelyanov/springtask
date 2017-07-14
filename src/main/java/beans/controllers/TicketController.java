@@ -1,5 +1,6 @@
 package beans.controllers;
 
+import beans.services.EventService;
 import beans.services.UserService;
 import beans.views.TicketsPdfView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,11 @@ public class TicketController {
     @Qualifier("userServiceImpl")
     private UserService userService;
 
+    @Autowired
+    @Qualifier("eventServiceImpl")
+    private EventService eventService;
+
+
     @RequestMapping(path = "/list", headers = {"Accept=application/pdf"})
     public ModelAndView showTicketsPDF() {
 
@@ -40,6 +46,11 @@ public class TicketController {
 
     @RequestMapping("/list")
     public String showTickets(@ModelAttribute("model") ModelMap model) {
+
+//        List<Event> events = eventService.getAll();
+//
+//        events.stream()
+//                .map(event -> )
 
         model.addAttribute("tickets", userService.getBookedTickets());
 

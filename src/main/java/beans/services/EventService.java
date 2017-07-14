@@ -1,5 +1,6 @@
 package beans.services;
 
+import beans.dto.EventSeatsDTO;
 import beans.models.Auditorium;
 import beans.models.Event;
 
@@ -21,6 +22,10 @@ public interface EventService {
     Event getEvent(String name, Auditorium auditorium, LocalDateTime dateTime);
 
     public List<Event> getByName(String name);
+
+    public Event getById(long id);
+
+    public EventSeatsDTO getSeatsAvailability(long eventId);
 
     public List<Event> getAll();
 

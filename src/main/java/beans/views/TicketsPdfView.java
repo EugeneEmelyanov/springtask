@@ -39,7 +39,6 @@ public class TicketsPdfView extends AbstractITextPdfView {
 
         for(Ticket t: tickets) {
             table.addCell(t.getEvent().getName());
-            table.addCell(t.getDateTime().toLocalDate().toString());
             table.addCell(t.getSeats());
             table.addCell(t.getUser().getName());
             table.addCell(Double.toString(t.getPrice()));

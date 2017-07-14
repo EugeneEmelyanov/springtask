@@ -18,7 +18,6 @@
                 <thead class="thead">
                     <tr>
                         <th>Event</th>
-                        <th>Date</th>
                         <th>Seats</th>
                         <th>User</th>
                         <th>Price</th>
@@ -32,7 +31,6 @@
                             <div>
                                 <a href="/event/?eventName=${ticket.event.name}">see other dates</a></div>
                             </td>
-                            <td>${ticket.dateTime}</td>
                             <td>${ticket.seats}</td>
                             <td><a href="/user/${ticket.user.id}">${ticket.user.name}</a>
                                 <td>${ticket.price}</td>

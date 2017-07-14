@@ -11,6 +11,7 @@ import beans.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -81,18 +82,16 @@ public class BookingController {
                            @RequestParam String auditoriumName,
                            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime eventDate,
                            @RequestParam List<Integer> seats,
-                           @RequestParam String userEmail,
+                           Authentication authentication,
                            HttpServletResponse response) throws IOException {
 
         validateParams(eventName, auditoriumName, eventDate);
 
-        if (Objects.isNull(userEmail)) {
-            throw new IllegalArgumentException("user email cannot be null");
-        }
-
         if (Objects.isNull(seats) || seats.isEmpty()) {
             throw new IllegalArgumentException("seats cannot be empty");
         }
+
+        String userEmail = authentication.getName();
 
         User user = userService.getUserByEmail(userEmail);
 
@@ -109,7 +108,7 @@ public class BookingController {
         Event event = eventService.getEvent(eventName, auditorium, eventDate);
 
 
-        Ticket t = bookingService.bookTicket(user, new Ticket(event, LocalDateTime.now(), seats, user,
+        Ticket t = bookingService.bookTicket(user, new Ticket(event, seats, user,
                 bookingService.getTicketPrice(event.getName(),
                         event.getAuditorium().getName(),
                         event.getDateTime(), seats,

@@ -24,7 +24,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -93,7 +92,7 @@ public class BookingServiceImplTest {
                 testEvent1.getAuditorium().getName(),
                 testEvent1.getDateTime());
         User newUser = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString(), LocalDate.now());
-        Ticket newTicket = new Ticket(testEvent1, LocalDateTime.now(), Arrays.asList(3, 4), newUser, 0.0);
+        Ticket newTicket = new Ticket(testEvent1, Arrays.asList(3, 4), newUser, 0.0);
         bookingService.bookTicket(newUser, newTicket);
     }
 
@@ -104,7 +103,7 @@ public class BookingServiceImplTest {
                 testEvent1.getAuditorium().getName(),
                 testEvent1.getDateTime());
         User testUser2 = (User) applicationContext.getBean("testUser2");
-        Ticket newTicket = new Ticket(testEvent1, LocalDateTime.now(), Arrays.asList(3, 4), testUser2, 0.0);
+        Ticket newTicket = new Ticket(testEvent1, Arrays.asList(3, 4), testUser2, 0.0);
         bookingService.bookTicket(testUser2, newTicket);
     }
 
@@ -115,7 +114,7 @@ public class BookingServiceImplTest {
                 testEvent1.getAuditorium().getName(),
                 testEvent1.getDateTime());
         User testUser1 = (User) applicationContext.getBean("testUser1");
-        Ticket newTicket = new Ticket(testEvent1, LocalDateTime.now(), Arrays.asList(5, 6), testUser1, 0.0);
+        Ticket newTicket = new Ticket(testEvent1, Arrays.asList(5, 6), testUser1, 0.0);
         Ticket bookedTicket = bookingService.bookTicket(testUser1, newTicket);
         List<Ticket> after = bookingService.getTicketsForEvent(testEvent1.getName(),
                 testEvent1.getAuditorium().getName(),
