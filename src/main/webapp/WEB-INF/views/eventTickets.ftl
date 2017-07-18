@@ -6,6 +6,10 @@
 <body>
     <#include "resources/navbar.ftl">
     <div class="page-header mt-4"><h1 class="text-center">${model.eventTickets.event.name} tickets: </h1></div>
+    <div class="page-header mt-4 row">
+        <h4 class="text-center col-lg-offset-4 col-lg-3">Your current balance: <span id="currentBalance">${currentAccount.prepaidMoney}</span></h4>
+        <a id="depositMoney" class="btn-lg btn-primary col-lg-1" href="#">Add 200</a>
+    </div>
     <div class="row">
         <div class="col-sm-6 col-lg-6 pl-10 pr-10">
             <div class="bg-info" style="margin:0 10px">
@@ -37,5 +41,6 @@
             </div>
         </div>
     </div>
+    <#include "resources/deposit.ftl">
 </body>
 </html>

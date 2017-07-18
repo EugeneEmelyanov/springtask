@@ -19,7 +19,7 @@ import java.util.Objects;
  * Time: 7:30 PM
  */
 @Service
-@Transactional
+@Transactional()
 public class UserServiceImpl implements UserService {
 
     private final UserDAO userDAO;

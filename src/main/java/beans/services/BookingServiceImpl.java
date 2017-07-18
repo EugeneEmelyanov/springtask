@@ -2,12 +2,15 @@ package beans.services;
 
 import beans.daos.BookingDAO;
 import beans.daos.EventDAO;
+import beans.daos.UserAccountDAO;
+import beans.exceptions.IncufficientMoneyException;
 import beans.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -38,6 +41,10 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     @Qualifier("eventDAO")
     private EventDAO eventDAO;
+
+    @Autowired
+    @Qualifier("userAccountServiceImpl")
+    private UserAccountService userAccountService;
 
     @Autowired
     public BookingServiceImpl(
@@ -120,7 +127,9 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Ticket bookTicket(User user, Ticket ticket) {
+    @Transactional(rollbackFor = {IncufficientMoneyException.class, IllegalStateException.class, NullPointerException.class},
+                isolation = Isolation.SERIALIZABLE)
+    public Ticket bookTicket(User user, Ticket ticket) throws IncufficientMoneyException {
         if (Objects.isNull(user)) {
             throw new NullPointerException("User is [null]");
         }
@@ -133,10 +142,12 @@ public class BookingServiceImpl implements BookingService {
         boolean seatsAreAlreadyBooked = bookedTickets.stream().filter(bookedTicket -> ticket.getSeatsList().stream().filter(
                 bookedTicket.getSeatsList()::contains).findAny().isPresent()).findAny().isPresent();
 
-        if (!seatsAreAlreadyBooked)
+        if (!seatsAreAlreadyBooked && checkUserBalance(user, ticket)) {
             bookingDAO.create(user, ticket);
-        else
+            userAccountService.withdrawMoney(user.getId(), ticket.getPrice());
+        } else {
             throw new IllegalStateException("Unable to book ticket: [" + ticket + "]. Seats are already booked.");
+        }
 
         return ticket;
     }
@@ -156,6 +167,14 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public double getTicketPrice(Event event, List<Integer> seats) {
         return getTicketPriceByEvent(event, seats);
+    }
+
+    private boolean checkUserBalance(User user, Ticket ticket) throws IncufficientMoneyException {
+        UserAccount userAccount = userAccountService.createOrGet(user.getId());
+        if (userAccount == null || userAccount.getPrepaidMoney() < ticket.getPrice()) {
+            throw new IncufficientMoneyException("Cannot book ticket because there is not enough money on the account");
+        }
+        return true;
     }
 
 }

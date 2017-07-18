@@ -1,5 +1,6 @@
 package beans.controllers;
 
+import beans.exceptions.IncufficientMoneyException;
 import beans.models.Auditorium;
 import beans.models.Event;
 import beans.models.Ticket;
@@ -83,7 +84,7 @@ public class BookingController {
                            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime eventDate,
                            @RequestParam List<Integer> seats,
                            Authentication authentication,
-                           HttpServletResponse response) throws IOException {
+                           HttpServletResponse response) throws IOException, IncufficientMoneyException {
 
         validateParams(eventName, auditoriumName, eventDate);
 
@@ -113,6 +114,7 @@ public class BookingController {
                         event.getAuditorium().getName(),
                         event.getDateTime(), seats,
                         user)));
+
 
         response.sendRedirect("/ticket/" + user.getId());
     }

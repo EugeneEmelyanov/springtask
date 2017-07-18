@@ -7,9 +7,7 @@ import beans.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,8 +40,8 @@ public class UserController {
         final List<User> usersByName = userService.getUsersByName(name);
 
         final List<Long> userIds = usersByName.stream()
-                                    .map(user -> user.getId())
-                                    .collect(Collectors.toList());
+                .map(user -> user.getId())
+                .collect(Collectors.toList());
 
         model.addAttribute("userAccounts", userAccountService.createOrGet(userIds));
 
@@ -52,6 +50,7 @@ public class UserController {
 
     @RequestMapping("/{userId}")
     public String showUser(@PathVariable() Long userId,
+                           @RequestParam(required = false, name = "show_error", defaultValue = "false") boolean showError,
                            ModelMap model) {
 
         User user = userService.getById(userId);
@@ -63,6 +62,10 @@ public class UserController {
         UserAccount userAccount = userAccountService.createOrGet(userId);
 
         model.addAttribute("userAccount", userAccount);
+
+        if (showError) {
+            model.addAttribute("msg", "Please, refill your account, you have not enough money to buy ticket.");
+        }
 
         return USER_VIEW;
     }

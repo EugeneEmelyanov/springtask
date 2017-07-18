@@ -1,5 +1,6 @@
 package beans.services;
 
+import beans.exceptions.IncufficientMoneyException;
 import beans.models.Event;
 import beans.models.Ticket;
 import beans.models.User;
@@ -18,7 +19,7 @@ public interface BookingService {
 
     double getTicketPrice(String event, String auditorium, LocalDateTime dateTime, List<Integer> seats, User user);
 
-    Ticket bookTicket(User user, Ticket ticket);
+    Ticket bookTicket(User user, Ticket ticket) throws IncufficientMoneyException;
 
     List<Ticket> getTicketsForEvent(String event, String auditorium, LocalDateTime date);
 

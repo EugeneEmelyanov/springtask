@@ -1,9 +1,10 @@
 package beans.controllers.advices;
 
-import beans.controllers.UserAccountController;
-import beans.controllers.UserController;
+import beans.controllers.*;
 import beans.services.SpringAdvancedUserDetailsService;
+import beans.services.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,9 +16,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 /**
  * Created by yauhen_yemelyanau on 7/17/17.
  */
-@ControllerAdvice(assignableTypes = {UserController.class})
+@ControllerAdvice(assignableTypes = {UserController.class, AuditoriumController.class, BookingController.class, EventController.class, TicketController.class})
 public class LoggedUserAdvice {
 
+    @Autowired
+    @Qualifier("userAccountServiceImpl")
+    private UserAccountService userAccountService;
 
     @ModelAttribute()
     public void addCurrentUser(Model model) {
@@ -28,6 +32,7 @@ public class LoggedUserAdvice {
         } else {
             SpringAdvancedUserDetailsService.UserPrincipal principal = (SpringAdvancedUserDetailsService.UserPrincipal) authentication.getPrincipal();
             model.addAttribute("currentUser", principal.getUser());
+            model.addAttribute("currentAccount", userAccountService.createOrGet(principal.getUser().getId()));
         }
     }
 }

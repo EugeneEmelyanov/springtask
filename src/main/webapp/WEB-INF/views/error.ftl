@@ -8,7 +8,7 @@
     <h1>Error Page</h1>
     <p>Application has encountered an error. Please contact support.</p>
     <br>
-    <h3>Exception: ${ex.message}</h3>
+    <h3>Exception: ${ex.message!}</h3>
     <br><br>
     <h3>Stack Trace</h3>
     <#list ex.stackTrace as ste>
