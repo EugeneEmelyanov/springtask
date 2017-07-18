@@ -8,6 +8,9 @@
     <div class="page-header mt-4"><h1 class="text-center">User details</h1></div>
     <div class="container">
        <h4>Name: ${userAccount.user.name}</h4>
+       <#if msg?has_content>
+      <h4 class="label-danger label">${msg}</h4>
+       </#if>
        <p>
            <i class="glyphicon glyphicon-envelope"></i>  ${userAccount.user.email}<br/>
 

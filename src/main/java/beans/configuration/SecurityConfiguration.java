@@ -29,9 +29,6 @@ import java.io.IOException;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private static final String HAS_REGISTERED_USER_ROLE = "hasAuthority('" + Roles.REGISTERED_USER.getAuthority() + "')";
-    private static final String HAS_BOOKING_MANAGER_ROLE = "hasAuthority('" + Roles.BOOKING_MANAGER.getAuthority() + "')";
-
     @Autowired
     @Qualifier("userDetailsService")
     private UserDetailsService userDetailsService;
@@ -46,10 +43,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/event/**").hasAuthority(Roles.REGISTERED_USER.getAuthority())
-                .antMatchers("/auditorium/**").access(HAS_REGISTERED_USER_ROLE)
-                .antMatchers("/home").access(HAS_REGISTERED_USER_ROLE)
-                .antMatchers("/ticket/list").access(HAS_BOOKING_MANAGER_ROLE)
-                .antMatchers("/ticket/{\\d}").access(HAS_REGISTERED_USER_ROLE)
+                .antMatchers("/user/**").hasAuthority(Roles.REGISTERED_USER.getAuthority())
+                .antMatchers("/auditorium/**").hasAuthority(Roles.REGISTERED_USER.getAuthority())
+                .antMatchers("/home").hasAuthority(Roles.REGISTERED_USER.getAuthority())
+                .antMatchers("/ticket/list").hasAuthority(Roles.BOOKING_MANAGER.getAuthority())
+                .antMatchers("/ticket/{\\d}").hasAuthority(Roles.REGISTERED_USER.getAuthority())
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -69,9 +67,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .key("remember-me-key")
                 .tokenValiditySeconds(86400)
                 .rememberMeCookieName("remember-me-cookie");
-
-        http.sessionManagement()
-                .maximumSessions(1);
 
 
         //TODO:fixme. Should be enabled however does not work for MacOs.
