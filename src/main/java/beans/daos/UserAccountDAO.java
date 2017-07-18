@@ -15,9 +15,7 @@ public interface UserAccountDAO {
 
     UserAccount getByUserId(final long userId);
 
-    void add(final long userId, final double money);
-
-    void withdraw(final long userId, final double money) throws IncufficientMoneyException;
+    UserAccount update(UserAccount userAccount);
 
     List<UserAccount> getAccountsForUsers(List<Long> userIds);
 

@@ -15,14 +15,15 @@
 
             <#if currentUser??>
              <#if userAccount.user.id == currentUser.id>
-                <h3>Your balance: ${userAccount.prepaidMoney}
-                <a class="btn btn-primary" href="/account/add?amount=200">Add 200</a>
+                <h3>Your balance: <span id="currentBalance">${userAccount.prepaidMoney}</span>
+                <a id="depositMoney" class="btn btn-primary" href="#">Add 200</a>
              </#if>
             </#if>
 
              <a class="btn btn-primary"
                   href="/ticket/${userAccount.user.id}">See booked tickets</a>
        </div>
-
+ 
+    <#include "resources/deposit.ftl"> 
 </body>
 </html>
