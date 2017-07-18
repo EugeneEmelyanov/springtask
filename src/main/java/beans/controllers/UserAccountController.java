@@ -1,14 +1,15 @@
 package beans.controllers;
 
+import beans.services.SpringAdvancedUserDetailsService;
 import beans.services.UserAccountService;
-import beans.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by yauhen_yemelyanau on 7/17/17.
@@ -17,21 +18,25 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/account")
 public class UserAccountController {
 
-//    private static final String USER_ACCOUNT_VIEW = "UserAccount";
-//
-//    @Autowired
-//    @Qualifier("userAccountServiceImpl")
-//    private UserAccountService userAccountService;
-//
-//    @Autowired
-//    @Qualifier("userServiceImpl")
-//    private UserService userService;
-//
-//    public String showAccounts(@ModelAttribute("model")ModelMap modelMap) {
-//
-//        userService.get
-//
-//        modelMap.addAttribute("userAccounts", )
-//        return USER_ACCOUNT_VIEW;
-//    }
+    @Autowired
+    @Qualifier("userAccountServiceImpl")
+    private UserAccountService userAccountService;
+
+
+    @RequestMapping("/add")
+    public void addMoney(@RequestParam("amount") double amount, HttpServletResponse response) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount cannot be less than 0");
+        }
+        Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (user instanceof SpringAdvancedUserDetailsService.UserPrincipal) {
+            final long userId = ((SpringAdvancedUserDetailsService.UserPrincipal) user).getUser().getId();
+            userAccountService.depositMoney(userId, amount);
+            response.setStatus(HttpServletResponse.SC_ACCEPTED);
+
+        } else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
+    }
 }

@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -47,7 +50,7 @@ public class AccountServiceImpl implements UserAccountService {
 
         List<UserAccount> accounts = Collections.synchronizedList(userAccountDAO.getAccountsForUsers(userIds));
         Set<Long> set = (accounts.stream()
-                .map(account->account.getUser().getId())
+                .map(account -> account.getUser().getId())
                 .collect(Collectors.toSet()));
 
         userIds.stream()
@@ -60,10 +63,15 @@ public class AccountServiceImpl implements UserAccountService {
 
     @Override
     public void depositMoney(long userId, Double amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount of money cannot be less than 0");
+        }
+
         UserAccount account = userAccountDAO.getByUserId(userId);
 
         if (account != null) {
-            userAccountDAO.add(userId, amount);
+            account.setPrepaidMoney(account.getPrepaidMoney() + amount);
+            userAccountDAO.update(account);
         } else {
             User user = userDAO.get(userId);
             Objects.requireNonNull(user, "Cannot find user for userId: " + userId);
@@ -72,7 +80,19 @@ public class AccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public void withdrawMoney(long userId, Double amount) throws IncufficientMoneyException{
-        userAccountDAO.withdraw(userId, amount);
+    public void withdrawMoney(long userId, Double amount) throws IncufficientMoneyException {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount of money cannot be less than 0");
+        }
+
+        UserAccount userAccount = userAccountDAO.getByUserId(userId);
+        Objects.requireNonNull(userAccount, "Cannot find account for user " + userId);
+
+        if (userAccount.getPrepaidMoney() < amount) {
+            throw new IncufficientMoneyException("Cannot withdraw " + amount + " from user " + userId);
+        }
+
+        userAccount.setPrepaidMoney(userAccount.getPrepaidMoney() - amount);
+        userAccountDAO.update(userAccount);
     }
 }

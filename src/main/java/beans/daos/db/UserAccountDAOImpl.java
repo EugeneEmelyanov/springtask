@@ -5,7 +5,9 @@ import beans.daos.UserAccountDAO;
 import beans.exceptions.IncufficientMoneyException;
 import beans.models.User;
 import beans.models.UserAccount;
+import org.apache.commons.lang3.ObjectUtils;
 import org.hibernate.Query;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
@@ -48,15 +50,11 @@ public class UserAccountDAOImpl extends AbstractDAO implements UserAccountDAO {
         return list;
     }
 
-    @Override
-    public void add(long userId, double money) {
-
+    public UserAccount update(final UserAccount userAccount) {
+        getCurrentSession().update(userAccount);
+        return userAccount;
     }
 
-    @Override
-    public void withdraw(long userId, double money) throws IncufficientMoneyException {
-        //TODO:implement
-    }
 
     private void checkUserAccount(final UserAccount userAccount) {
         Objects.requireNonNull(userAccount, "User account cannot be null");
