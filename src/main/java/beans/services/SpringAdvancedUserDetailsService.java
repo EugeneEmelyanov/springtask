@@ -31,7 +31,7 @@ public class SpringAdvancedUserDetailsService implements UserDetailsService {
 
     }
 
-    private class UserPrincipal implements UserDetails {
+    public class UserPrincipal implements UserDetails {
 
         private User user;
 
@@ -48,6 +48,10 @@ public class SpringAdvancedUserDetailsService implements UserDetailsService {
         public String getPassword() {
 
             return Objects.isNull(user) ? null : user.getPassword();
+        }
+
+        public User getUser() {
+            return user;
         }
 
         @Override

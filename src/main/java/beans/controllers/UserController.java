@@ -38,7 +38,7 @@ public class UserController {
 
     @RequestMapping("/list")
     public String showUsers(@RequestParam(required = false) String name,
-                            @ModelAttribute("model") ModelMap model) {
+                            ModelMap model) {
         final List<User> usersByName = userService.getUsersByName(name);
 
         final List<Long> userIds = usersByName.stream()
@@ -52,7 +52,7 @@ public class UserController {
 
     @RequestMapping("/{userId}")
     public String showUser(@PathVariable() Long userId,
-                           @ModelAttribute("model") ModelMap model) {
+                           ModelMap model) {
 
         User user = userService.getById(userId);
 
@@ -69,7 +69,7 @@ public class UserController {
 
     @RequestMapping(params = {"email"})
     public String showUser(@RequestParam String email,
-                           @ModelAttribute("model") ModelMap model) {
+                           ModelMap model) {
         User user = userService.getUserByEmail(email);
 
         if (Objects.isNull(user)) {

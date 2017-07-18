@@ -46,7 +46,9 @@ public class AccountServiceImpl implements UserAccountService {
     public List<UserAccount> createOrGet(final List<Long> userIds) {
 
         List<UserAccount> accounts = Collections.synchronizedList(userAccountDAO.getAccountsForUsers(userIds));
-        Set<UserAccount> set = new HashSet<>(accounts);
+        Set<Long> set = (accounts.stream()
+                .map(account->account.getUser().getId())
+                .collect(Collectors.toSet()));
 
         userIds.stream()
                 .filter(id -> !set.contains(id))
