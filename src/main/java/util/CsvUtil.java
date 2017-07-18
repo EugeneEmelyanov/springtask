@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
+ * User: Eugene Yemelyanau
  * Date: 21/2/16
  * Time: 12:09 PM
  */
