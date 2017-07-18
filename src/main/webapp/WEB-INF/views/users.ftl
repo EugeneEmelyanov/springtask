@@ -13,13 +13,13 @@
                 <th>Birthday</th>
             </tr>
             </thead>
-            <#list model["users"] as user>
+            <#list model["userAccounts"] as userAccount>
             <tbody class="tbody">
             <tr>
-                <td>${user.name}</td>
-                <td>${user.email}</td>
-                <td>${user.birthday}</td>
-                <td><a href="/user/${user.id}">link</a>
+                <td>${userAccount.user.name}</td>
+                <td>${userAccount.user.email}</td>
+                <td>${userAccount.user.birthday}</td>
+                <td><a href="/user/${userAccount.user.id}">See details</a>
              </tr>
              </#list>
              </tbody>
