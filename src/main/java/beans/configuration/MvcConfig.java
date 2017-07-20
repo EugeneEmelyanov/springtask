@@ -1,5 +1,7 @@
 package beans.configuration;
 
+import beans.PdfMessageConverter;
+import beans.models.Ticket;
 import beans.security.SecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -8,12 +10,16 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
+
+import java.util.List;
 
 /**
  * Created by Yauhen_Yemelyanau on 7/3/2017.
@@ -68,14 +74,34 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     }
 
     @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(converter());
+        converters.add(pdfMessageConverter());
+        super.configureMessageConverters(converters);
+    }
+
+    @Bean
+    MappingJackson2HttpMessageConverter converter() {
+        return new MappingJackson2HttpMessageConverter();
+    }
+
+    @Bean
+    PdfMessageConverter pdfMessageConverter() {
+        return new PdfMessageConverter();
+    }
+
+    @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         configurer
                 .defaultContentType(MediaType.TEXT_HTML)
-                .parameterName("type")
+                .mediaType("pdf", new MediaType("application", "pdf"))
+                .mediaType("json", MediaType.APPLICATION_JSON)
+                .parameterName("mediaType")
                 .favorParameter(true)
+                .favorPathExtension(true)
                 .ignoreUnknownPathExtensions(false)
-                .ignoreAcceptHeader(false)
-                .useJaf(true);
+                .ignoreAcceptHeader(true)
+                .useJaf(false);
     }
 
 
