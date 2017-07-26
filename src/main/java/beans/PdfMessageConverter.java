@@ -28,7 +28,7 @@ public class PdfMessageConverter extends AbstractGenericHttpMessageConverter<Obj
 
     @Override
     public boolean canWrite(Class<?> clazz, MediaType mediaType) {
-        if ( "application/pdf".equals(mediaType.toString())) {
+        if ( mediaType != null && "application/pdf".equals(mediaType.toString())) {
             return true;
         }
         return super.canWrite(clazz, mediaType);
