@@ -2,7 +2,11 @@ package beans.models;
 
 import beans.security.Roles;
 import beans.serializers.LocalDateDesirializer;
+import beans.serializers.LocalDateSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.StringUtils;
@@ -26,7 +30,9 @@ public class User {
     private String email;
     private String name;
     @JsonDeserialize(using = LocalDateDesirializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate birthday;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @Column(nullable = false)
     private String userRoles = Roles.REGISTERED_USER.getAuthority();
@@ -59,6 +65,7 @@ public class User {
         return userRoles;
     }
 
+    @JsonIgnore
     public List<GrantedAuthority> getGrantedAuthorities() {
 
         return Arrays.asList(userRoles.split(","))
