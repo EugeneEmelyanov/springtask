@@ -8,25 +8,22 @@ import beans.daos.mocks.BookingDAOBookingMock;
 import beans.daos.mocks.DBAuditoriumDAOMock;
 import beans.daos.mocks.EventDAOMock;
 import beans.daos.mocks.UserDAOMock;
+import beans.exceptions.IncufficientMoneyException;
 import beans.models.*;
 import beans.security.Roles;
 import beans.services.*;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.ContextConfiguration;
+import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.*;
+
 
 import java.time.LocalDate;
 import java.util.*;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 13/2/16
- * Time: 3:36 PM
- */
+
 @Configuration()
 public class TestBookingServiceConfiguration {
 
@@ -139,6 +136,15 @@ public class TestBookingServiceConfiguration {
     @Bean
     public UserDAO userDAOMock() {
         return new UserDAOMock(Arrays.asList(testUser1()));
+    }
+
+    @Bean(name = "userAccountServiceImpl")
+    public UserAccountService getUserAccountService() throws IncufficientMoneyException {
+        UserAccountService uas = mock(UserAccountService.class);
+        UserAccount account = UserAccount.newBuilder().withPrepaidMoney(1000000d).build();
+
+        when(uas.createOrGet(anyLong())).thenReturn(account);
+        return uas;
     }
 
     @Bean
