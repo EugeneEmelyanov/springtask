@@ -1,4 +1,4 @@
-package beans.security;
+package com.epam.security;
 
 import org.springframework.security.core.GrantedAuthority;
 

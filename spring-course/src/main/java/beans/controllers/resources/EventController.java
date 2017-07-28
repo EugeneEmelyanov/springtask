@@ -1,6 +1,6 @@
 package beans.controllers.resources;
 
-import beans.models.Event;
+import com.epam.models.Event;
 import beans.services.AuditoriumService;
 import beans.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;

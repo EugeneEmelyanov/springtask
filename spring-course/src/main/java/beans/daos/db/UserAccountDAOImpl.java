@@ -2,8 +2,8 @@ package beans.daos.db;
 
 import beans.daos.AbstractDAO;
 import beans.daos.UserAccountDAO;
-import beans.models.User;
-import beans.models.UserAccount;
+import com.epam.models.User;
+import com.epam.models.UserAccount;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 

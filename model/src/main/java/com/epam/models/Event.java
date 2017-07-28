@@ -1,8 +1,8 @@
-package beans.models;
+package com.epam.models;
 
-import beans.serializers.AuditoriumDesirializer;
-import beans.serializers.LocalDateTimeDesirializer;
-import beans.serializers.LocalDateTimeSerializer;
+import com.epam.serializers.AuditoriumDesirializer;
+import com.epam.serializers.LocalDateTimeDesirializer;
+import com.epam.serializers.LocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

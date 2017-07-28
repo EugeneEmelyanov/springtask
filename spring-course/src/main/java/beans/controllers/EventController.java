@@ -1,7 +1,7 @@
 package beans.controllers;
 
 import beans.dto.EventSeatsDTO;
-import beans.models.Auditorium;
+import com.epam.models.Auditorium;
 import beans.services.AuditoriumService;
 import beans.services.BookingService;
 import beans.services.EventService;

@@ -1,4 +1,4 @@
-package beans.models;
+package com.epam.models;
 
 /**
  * Created with IntelliJ IDEA.

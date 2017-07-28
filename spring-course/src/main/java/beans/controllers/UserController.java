@@ -1,7 +1,7 @@
 package beans.controllers;
 
-import beans.models.User;
-import beans.models.UserAccount;
+import com.epam.models.User;
+import com.epam.models.UserAccount;
 import beans.services.UserAccountService;
 import beans.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,7 +3,7 @@ package beans.services;
 import beans.daos.BookingDAO;
 import beans.daos.EventDAO;
 import beans.exceptions.IncufficientMoneyException;
-import beans.models.*;
+import com.epam.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,6 @@
 package beans.dto;
 
-import beans.models.Event;
+import com.epam.models.Event;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 

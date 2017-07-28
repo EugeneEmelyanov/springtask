@@ -4,7 +4,7 @@ import beans.configuration.AppConfiguration;
 import beans.configuration.db.DataSourceConfiguration;
 import beans.configuration.db.DbSessionFactory;
 import beans.daos.mocks.DBAuditoriumDAOMock;
-import beans.models.Auditorium;
+import com.epam.models.Auditorium;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

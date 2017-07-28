@@ -1,7 +1,7 @@
 package beans.services;
 
-import beans.models.Ticket;
-import beans.models.User;
+import com.epam.models.Ticket;
+import com.epam.models.User;
 
 import java.util.List;
 

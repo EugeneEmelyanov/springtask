@@ -1,7 +1,7 @@
 package beans.configuration;
 
-import beans.models.User;
-import beans.security.Roles;
+import com.epam.models.User;
+import com.epam.security.Roles;
 import beans.services.UserService;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;

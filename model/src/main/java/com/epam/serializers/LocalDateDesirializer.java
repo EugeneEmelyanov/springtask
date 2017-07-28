@@ -1,4 +1,4 @@
-package beans.serializers;
+package com.epam.serializers;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;

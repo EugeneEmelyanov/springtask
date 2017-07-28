@@ -1,8 +1,8 @@
 package beans.daos.mocks;
 
 import beans.daos.db.BookingDAOImpl;
-import beans.models.Ticket;
-import beans.models.User;
+import com.epam.models.Ticket;
+import com.epam.models.User;
 
 import java.util.Map;
 import java.util.Set;

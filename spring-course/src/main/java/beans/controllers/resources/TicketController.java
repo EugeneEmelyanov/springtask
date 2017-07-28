@@ -1,6 +1,6 @@
 package beans.controllers.resources;
 
-import beans.models.Ticket;
+import com.epam.models.Ticket;
 import beans.services.BookingService;
 import beans.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

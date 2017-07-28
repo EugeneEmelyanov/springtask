@@ -2,7 +2,7 @@ package beans.daos.db;
 
 import beans.daos.AbstractDAO;
 import beans.daos.UserDAO;
-import beans.models.User;
+import com.epam.models.User;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

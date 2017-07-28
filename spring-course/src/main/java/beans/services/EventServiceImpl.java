@@ -2,12 +2,11 @@ package beans.services;
 
 import beans.daos.EventDAO;
 import beans.dto.EventSeatsDTO;
-import beans.models.Auditorium;
-import beans.models.Event;
-import beans.models.Ticket;
+import com.epam.models.Auditorium;
+import com.epam.models.Event;
+import com.epam.models.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

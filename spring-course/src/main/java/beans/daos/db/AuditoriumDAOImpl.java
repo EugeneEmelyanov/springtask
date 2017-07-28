@@ -2,7 +2,7 @@ package beans.daos.db;
 
 import beans.daos.AbstractDAO;
 import beans.daos.AuditoriumDAO;
-import beans.models.Auditorium;
+import com.epam.models.Auditorium;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 

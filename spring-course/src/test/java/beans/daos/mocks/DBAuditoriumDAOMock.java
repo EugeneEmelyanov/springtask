@@ -1,7 +1,7 @@
 package beans.daos.mocks;
 
 import beans.daos.AuditoriumDAO;
-import beans.models.Auditorium;
+import com.epam.models.Auditorium;
 
 import java.util.List;
 
