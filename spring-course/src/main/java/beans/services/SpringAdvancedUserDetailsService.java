@@ -1,6 +1,6 @@
 package beans.services;
 
-import beans.models.User;
+import com.epam.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;

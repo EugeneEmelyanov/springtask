@@ -1,6 +1,6 @@
 package beans.controllers;
 
-import beans.models.Auditorium;
+import com.epam.models.Auditorium;
 import beans.services.AuditoriumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

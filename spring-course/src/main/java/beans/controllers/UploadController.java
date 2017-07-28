@@ -1,8 +1,8 @@
 package beans.controllers;
 
 import beans.dto.ImportDTO;
-import beans.models.Event;
-import beans.models.User;
+import com.epam.models.Event;
+import com.epam.models.User;
 import beans.services.EventService;
 import beans.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;

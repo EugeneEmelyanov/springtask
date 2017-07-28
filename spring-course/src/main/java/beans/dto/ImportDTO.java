@@ -1,7 +1,7 @@
 package beans.dto;
 
-import beans.models.Event;
-import beans.models.User;
+import com.epam.models.Event;
+import com.epam.models.User;
 
 import java.util.List;
 

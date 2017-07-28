@@ -2,8 +2,8 @@ package beans.daos.db;
 
 import beans.daos.AbstractDAO;
 import beans.daos.EventDAO;
-import beans.models.Auditorium;
-import beans.models.Event;
+import com.epam.models.Auditorium;
+import com.epam.models.Event;
 import org.hibernate.Query;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Restrictions;

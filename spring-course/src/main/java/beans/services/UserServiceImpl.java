@@ -2,8 +2,8 @@ package beans.services;
 
 import beans.daos.BookingDAO;
 import beans.daos.UserDAO;
-import beans.models.Ticket;
-import beans.models.User;
+import com.epam.models.Ticket;
+import com.epam.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

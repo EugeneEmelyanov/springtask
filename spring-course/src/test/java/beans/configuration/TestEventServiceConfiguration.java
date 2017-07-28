@@ -2,9 +2,8 @@ package beans.configuration;
 
 import beans.daos.EventDAO;
 import beans.daos.mocks.EventDAOMock;
-import beans.models.Event;
-import beans.models.Rate;
-import beans.services.BookingServiceImpl;
+import com.epam.models.Event;
+import com.epam.models.Rate;
 import beans.services.EventService;
 import beans.services.EventServiceImpl;
 import org.springframework.context.annotation.Bean;
@@ -15,19 +14,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 13/2/16
- * Time: 6:10 PM
- */
+
 @Configuration
 public class TestEventServiceConfiguration extends TestAuditoriumConfiguration {
 
     @Bean
     @Scope("prototype")
     public Event testEvent1() {
-        return new Event("Test event", beans.models.Rate.HIGH, 124.0, java.time.LocalDateTime.of(2016, 2, 6, 14, 45, 0),
+        return new Event("Test event", Rate.HIGH, 124.0, java.time.LocalDateTime.of(2016, 2, 6, 14, 45, 0),
                          testHall1());
     }
 

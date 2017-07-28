@@ -1,7 +1,7 @@
 package beans.daos;
 
-import beans.models.Auditorium;
-import beans.models.Event;
+import com.epam.models.Auditorium;
+import com.epam.models.Event;
 
 import java.time.LocalDateTime;
 import java.util.List;

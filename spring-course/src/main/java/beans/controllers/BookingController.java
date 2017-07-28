@@ -1,14 +1,15 @@
 package beans.controllers;
 
 import beans.exceptions.IncufficientMoneyException;
-import beans.models.Auditorium;
-import beans.models.Event;
-import beans.models.Ticket;
-import beans.models.User;
+import com.epam.models.Auditorium;
+import com.epam.models.Event;
+import com.epam.models.Ticket;
+import com.epam.models.User;
 import beans.services.AuditoriumService;
 import beans.services.BookingService;
 import beans.services.EventService;
 import beans.services.UserService;
+import com.epam.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.annotation.DateTimeFormat;

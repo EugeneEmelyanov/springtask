@@ -1,7 +1,6 @@
-package beans.models;
+package com.epam.models;
 
-import util.CsvUtil;
-
+import com.epam.util.CsvUtil;
 import java.util.List;
 
 /**
@@ -72,7 +71,7 @@ public class Auditorium {
     }
 
     public List<Integer> getVipSeatsList() {
-        return CsvUtil.fromCsvToList(vipSeats, Integer:: valueOf);
+        return com.epam.util.CsvUtil.fromCsvToList(vipSeats, Integer:: valueOf);
     }
 
     public void setVipSeatsList(List<Integer> vipSeats) {

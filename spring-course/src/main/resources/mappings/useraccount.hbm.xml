@@ -10,13 +10,13 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="beans.models">
+<hibernate-mapping package="com.epam.models">
 
     <class name="UserAccount" table="USER_ACCOUNT">
         <id name="id" column="ID">
             <generator class="identity"/>
         </id>
-        <one-to-one name="user" foreign-key="USER_ID" class="beans.models.User" fetch="join" lazy="false"/>
+        <one-to-one name="user" foreign-key="USER_ID" class="com.epam.models.User" fetch="join" lazy="false"/>
         <property name="prepaidMoney" type="double" column="PREPAID_MONEY" />
     </class>
 

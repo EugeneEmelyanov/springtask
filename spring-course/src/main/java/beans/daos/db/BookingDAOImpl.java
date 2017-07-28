@@ -2,10 +2,10 @@ package beans.daos.db;
 
 import beans.daos.AbstractDAO;
 import beans.daos.BookingDAO;
-import beans.models.Booking;
-import beans.models.Event;
-import beans.models.Ticket;
-import beans.models.User;
+import com.epam.models.Booking;
+import com.epam.models.Event;
+import com.epam.models.Ticket;
+import com.epam.models.User;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 

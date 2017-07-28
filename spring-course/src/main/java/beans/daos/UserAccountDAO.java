@@ -1,7 +1,7 @@
 package beans.daos;
 
-import beans.models.User;
-import beans.models.UserAccount;
+import com.epam.models.User;
+import com.epam.models.UserAccount;
 
 import java.util.List;
 

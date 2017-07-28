@@ -1,7 +1,7 @@
 package beans.services;
 
 import beans.exceptions.IncufficientMoneyException;
-import beans.models.UserAccount;
+import com.epam.models.UserAccount;
 
 import java.util.List;
 

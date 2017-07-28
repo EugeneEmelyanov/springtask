@@ -1,9 +1,9 @@
-package beans.models;
+package com.epam.models;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import util.CsvUtil;
+import com.epam.util.CsvUtil;
 
 import java.util.List;
 

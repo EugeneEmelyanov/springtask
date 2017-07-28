@@ -9,15 +9,14 @@ import beans.daos.mocks.DBAuditoriumDAOMock;
 import beans.daos.mocks.EventDAOMock;
 import beans.daos.mocks.UserDAOMock;
 import beans.exceptions.IncufficientMoneyException;
-import beans.models.*;
-import beans.security.Roles;
+import com.epam.models.*;
+import com.epam.security.Roles;
 import beans.services.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import static org.mockito.Mockito.*;
-import static org.mockito.Matchers.*;
 
 
 import java.time.LocalDate;
@@ -55,7 +54,7 @@ public class TestBookingServiceConfiguration {
 
     @Bean
     public Event testEvent1() {
-        return new Event(1, "Test event", beans.models.Rate.HIGH, 124.0, java.time.LocalDateTime.of(2016, 2, 6, 14, 45, 0),
+        return new Event(1, "Test event", Rate.HIGH, 124.0, java.time.LocalDateTime.of(2016, 2, 6, 14, 45, 0),
                 testHall1());
     }
 

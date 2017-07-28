@@ -1,9 +1,9 @@
 package beans.services;
 
 import beans.exceptions.IncufficientMoneyException;
-import beans.models.Event;
-import beans.models.Ticket;
-import beans.models.User;
+import com.epam.models.Event;
+import com.epam.models.Ticket;
+import com.epam.models.User;
 
 import java.time.LocalDateTime;
 import java.util.List;

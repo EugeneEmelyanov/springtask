@@ -1,8 +1,8 @@
-package beans.models;
+package com.epam.models;
 
-import beans.security.Roles;
-import beans.serializers.LocalDateDesirializer;
-import beans.serializers.LocalDateSerializer;
+import com.epam.security.Roles;
+import com.epam.serializers.LocalDateDesirializer;
+import com.epam.serializers.LocalDateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -10,18 +10,11 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.Column;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 2/1/2016
- * Time: 7:35 PM
- */
 public class User {
 
     private long id;
@@ -32,7 +25,6 @@ public class User {
     private LocalDate birthday;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    @Column(nullable = false)
     private String userRoles = Roles.REGISTERED_USER.getAuthority();
 
     private User(Builder builder) {

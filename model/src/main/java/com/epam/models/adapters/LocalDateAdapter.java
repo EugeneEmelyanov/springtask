@@ -1,8 +1,7 @@
-package beans.models.adapters;
+package com.epam.models.adapters;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * Created by yauhen_yemelyanau on 7/19/17.
