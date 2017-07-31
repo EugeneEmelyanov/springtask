@@ -26,17 +26,18 @@ public class Main {
         EventResourceRestClient restClient = new EventResourceRestClient();
         events = restClient.getAllEvents();
         System.out.println(events);
-        Event event = restClient.create(getTestEvent());
-
-        System.out.println(event);
-
-        Event newEvent = restClient.getById(event.getId());
-        System.out.println(newEvent);
-
-        restClient.removeEvent(event.getId());
-        System.out.println("removed " + (restClient.getAllEvents().stream()
-                .filter(u -> u.getId() == event.getId())
-                .findFirst().isPresent() ? "badly" : "succesfully"));
+        //TODO:figure out Auditorium deserialization
+//        Event event = restClient.create(getTestEvent());
+//
+//        System.out.println(event);
+//
+//        Event newEvent = restClient.getById(event.getId());
+//        System.out.println(newEvent);
+//
+//        restClient.removeEvent(event.getId());
+//        System.out.println("removed " + (restClient.getAllEvents().stream()
+//                .filter(u -> u.getId() == event.getId())
+//                .findFirst().isPresent() ? "badly" : "succesfully"));
 
     }
 

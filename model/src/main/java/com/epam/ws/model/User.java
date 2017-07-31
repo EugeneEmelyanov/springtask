@@ -1,52 +1,44 @@
-package com.epam.models;
+package com.epam.ws.model;
 
 import com.epam.models.adapters.LocalDateAdapter;
 import com.epam.security.Roles;
 import com.epam.serializers.LocalDateDesirializer;
 import com.epam.serializers.LocalDateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.StringUtils;
 
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlSchemaTypes;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
+@XmlType(name = "User", propOrder = {
+        "id",
+        "name",
+        "email",
+        "birthday",
+        "password",
+        "userRoles"
+}, namespace = "http://epam.com/springcourse")
 public class User {
 
     private long id;
     private String email;
     private String name;
+
     @JsonDeserialize(using = LocalDateDesirializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate birthday;
     private String password;
     private String userRoles = Roles.REGISTERED_USER.getAuthority();
 
-    private User(Builder builder) {
-        setId(builder.id);
-        setEmail(builder.email);
-        setName(builder.name);
-        setBirthday(builder.birthday);
-        setPassword(builder.password);
-        setUserRoles(builder.userRoles);
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
+    @XmlElement(required = true)
     public String getPassword() {
         return password;
     }
@@ -54,7 +46,7 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    @XmlElement(required = true)
     public String getUserRoles() {
         if (StringUtils.isEmpty(userRoles)) {
             return Roles.REGISTERED_USER.getAuthority();
@@ -62,30 +54,6 @@ public class User {
         return userRoles;
     }
 
-    @JsonIgnore
-    public List<GrantedAuthority> getGrantedAuthorities() {
-
-        return Arrays.asList(userRoles.split(","))
-                .stream()
-                .map(authority ->new UserGrantedAuthority(authority))
-                .collect(Collectors.toList());
-
-
-    }
-
-    private static class UserGrantedAuthority implements GrantedAuthority {
-
-        private final String principal;
-
-        public UserGrantedAuthority(final String principal) {
-            this.principal = principal;
-        }
-
-        @Override
-        public String getAuthority() {
-            return principal;
-        }
-    }
 
     public void setUserRoles(String userRoles) {
         this.userRoles = userRoles;
@@ -106,10 +74,11 @@ public class User {
         this(-1, email, name, birthday);
     }
 
-    public User withId(long id) {
-        return new User(id, email, name, birthday);
+    public com.epam.models.User withId(long id) {
+        return new com.epam.models.User(id, email, name, birthday);
     }
 
+    @XmlElement(required = true)
     public long getId() {
         return id;
     }
@@ -118,6 +87,7 @@ public class User {
         this.id = id;
     }
 
+    @XmlElement(required = true)
     public String getEmail() {
         return email;
     }
@@ -126,6 +96,7 @@ public class User {
         this.email = email;
     }
 
+    @XmlElement(required = true)
     public String getName() {
         return name;
     }
@@ -136,6 +107,7 @@ public class User {
 
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     @XmlSchemaType(name="dateTime")
+    @XmlElement(required = true)
     public LocalDate getBirthday() {
         return birthday;
     }
@@ -180,52 +152,5 @@ public class User {
                 ", name='" + name + '\'' +
                 ", birthday=" + birthday +
                 '}';
-    }
-
-    @XmlTransient
-    public static final class Builder {
-        private long id;
-        private String email;
-        private String name;
-        private LocalDate birthday;
-        private String password;
-        private String userRoles;
-
-        private Builder() {
-        }
-
-        public Builder withId(long val) {
-            id = val;
-            return this;
-        }
-
-        public Builder withEmail(String val) {
-            email = val;
-            return this;
-        }
-
-        public Builder withName(String val) {
-            name = val;
-            return this;
-        }
-
-        public Builder withBirthday(LocalDate val) {
-            birthday = val;
-            return this;
-        }
-
-        public Builder withPassword(String val) {
-            password = val;
-            return this;
-        }
-
-        public Builder withUserRoles(String val) {
-            userRoles = val;
-            return this;
-        }
-
-        public User build() {
-            return new User(this);
-        }
     }
 }
