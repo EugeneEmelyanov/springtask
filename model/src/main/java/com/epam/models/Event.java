@@ -1,6 +1,5 @@
 package com.epam.models;
 
-import com.epam.serializers.AuditoriumDesirializer;
 import com.epam.serializers.LocalDateTimeDesirializer;
 import com.epam.serializers.LocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -23,7 +22,6 @@ public class Event {
     @JsonDeserialize(using = LocalDateTimeDesirializer.class)
     @JsonSerialize(using=LocalDateTimeSerializer.class)
     private LocalDateTime dateTime;
-    @JsonDeserialize(using=AuditoriumDesirializer.class)
     private Auditorium    auditorium;
 
     public Event() {
