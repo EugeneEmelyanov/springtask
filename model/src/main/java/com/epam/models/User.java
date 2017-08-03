@@ -1,23 +1,19 @@
 package com.epam.models;
 
-import com.epam.models.adapters.LocalDateAdapter;
+import com.epam.ws.model.adapters.LocalDateAdapter;
 import com.epam.security.Roles;
 import com.epam.serializers.LocalDateDesirializer;
 import com.epam.serializers.LocalDateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.StringUtils;
 
 import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlSchemaTypes;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -134,8 +130,6 @@ public class User {
         this.name = name;
     }
 
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    @XmlSchemaType(name="dateTime")
     public LocalDate getBirthday() {
         return birthday;
     }

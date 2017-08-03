@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://epam.com/springcourse/" version="1.0">
+
+  <xs:complexType name="Event">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="rate" type="xs:string"/>
+      <xs:element name="basePrice" type="xs:double"/>
+      <xs:element name="dateTime" type="xs:dateTime"/>
+      <xs:element name="auditoriumId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

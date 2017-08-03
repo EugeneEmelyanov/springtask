@@ -1,4 +1,4 @@
-package com.epam.models.adapters;
+package com.epam.ws.model.adapters;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.LocalDateTime;

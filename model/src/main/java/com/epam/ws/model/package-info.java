@@ -8,7 +8,7 @@
 })
 package com.epam.ws.model;
 
-import com.epam.models.adapters.LocalDateTimeAdapter;
+import com.epam.ws.model.adapters.LocalDateTimeAdapter;
 
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlSchemaTypes;
