@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
+ * UserDTO: Dmytro_Babichev
  * Date: 2/3/2016
  * Time: 11:09 AM
  */

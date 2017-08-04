@@ -26,7 +26,7 @@ public class LoggedUserAdvice {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof String) {
             //anonymous user (not logged in)
-            model.addAttribute("anonymous", "User is not logged in!");
+            model.addAttribute("anonymous", "UserDTO is not logged in!");
         } else {
             SpringAdvancedUserDetailsService.UserPrincipal principal = (SpringAdvancedUserDetailsService.UserPrincipal) authentication.getPrincipal();
             model.addAttribute("currentUser", principal.getUser());

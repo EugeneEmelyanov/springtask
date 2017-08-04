@@ -7,7 +7,7 @@ import java.util.Objects;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
+ * UserDTO: Dmytro_Babichev
  * Date: 2/2/2016
  * Time: 11:38 AM
  */
@@ -27,13 +27,13 @@ public interface UserDAO {
 
     static void validateUser(User user) {
         if (Objects.isNull(user)) {
-            throw new NullPointerException("User is [null]");
+            throw new NullPointerException("UserDTO is [null]");
         }
         if (Objects.isNull(user.getEmail())) {
-            throw new NullPointerException("User's email is [null]. User: [" + user + "]");
+            throw new NullPointerException("UserDTO's email is [null]. UserDTO: [" + user + "]");
         }
         if (Objects.isNull(user.getName())) {
-            throw new NullPointerException("User's name is [null]. User: [" + user + "]");
+            throw new NullPointerException("UserDTO's name is [null]. UserDTO: [" + user + "]");
         }
     }
 }

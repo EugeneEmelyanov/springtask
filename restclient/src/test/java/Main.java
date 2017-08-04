@@ -27,11 +27,11 @@ public class Main {
         events = restClient.getAllEvents();
         System.out.println(events);
         //TODO:figure out Auditorium deserialization
-//        Event event = restClient.create(getTestEvent());
+//        EventDTO event = restClient.create(getTestEvent());
 //
 //        System.out.println(event);
 //
-//        Event newEvent = restClient.getById(event.getId());
+//        EventDTO newEvent = restClient.getById(event.getId());
 //        System.out.println(newEvent);
 //
 //        restClient.removeEvent(event.getId());

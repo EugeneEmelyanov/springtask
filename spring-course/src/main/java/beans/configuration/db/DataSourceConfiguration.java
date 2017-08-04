@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
+ * UserDTO: Dmytro_Babichev
  * Date: 20/2/16
  * Time: 3:49 PM
  */

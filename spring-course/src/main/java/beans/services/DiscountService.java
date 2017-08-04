@@ -5,7 +5,7 @@ import com.epam.models.User;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
+ * UserDTO: Dmytro_Babichev
  * Date: 2/4/2016
  * Time: 11:17 AM
  */

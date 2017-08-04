@@ -81,7 +81,7 @@ public class DataLoader {
 //        LocalDateTime dateOfEvent = LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(15, 45, 0));
 //
 //
-//        userService.register(User.newBuilder()
+//        userService.register(UserDTO.newBuilder()
 //                .withName(name)
 //                .withEmail(email)
 //                .withBirthday(LocalDate.now())
@@ -89,7 +89,7 @@ public class DataLoader {
 //                .withUserRoles(Roles.REGISTERED_USER.getAuthority() + "," + Roles.BOOKING_MANAGER.getAuthority())
 //                .build()
 //        );
-//        userService.register(User.newBuilder()
+//        userService.register(UserDTO.newBuilder()
 //                .withName(name)
 //                .withEmail("yy")
 //                .withBirthday(LocalDate.of(1992, 4, 29))
@@ -98,28 +98,28 @@ public class DataLoader {
 //                .build());
 //
 //
-//        User userByEmail = userService.getUserByEmail(email);
-//        System.out.println("User with email: [" + email + "] is " + userByEmail);
+//        UserDTO userByEmail = userService.getUserByEmail(email);
+//        System.out.println("UserDTO with email: [" + email + "] is " + userByEmail);
 //        System.out.println();
 //
 //        System.out.println("All users with name: [" + name + "] are: ");
 //        userService.getUsersByName(name).forEach(System.out::println);
 //        System.out.println();
 //
-//        Event event1 = eventService.create(
-//                new Event(eventName, Rate.HIGH, 60, LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(9, 0, 0)),
+//        EventDTO event1 = eventService.create(
+//                new EventDTO(eventName, Rate.HIGH, 60, LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(9, 0, 0)),
 //                        blueHall));
 //        System.out.println();
-//        System.out.println("Event by name: " + eventService.getByName(event1.getName()));
+//        System.out.println("EventDTO by name: " + eventService.getByName(event1.getName()));
 //        System.out.println();
-//        eventService.create(new Event(eventName, Rate.HIGH, 60, dateOfEvent, blueHall));
-//        Event event2 = eventService.create(
-//                new Event(eventName, Rate.HIGH, 60, LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(21, 18, 0)),
+//        eventService.create(new EventDTO(eventName, Rate.HIGH, 60, dateOfEvent, blueHall));
+//        EventDTO event2 = eventService.create(
+//                new EventDTO(eventName, Rate.HIGH, 60, LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(21, 18, 0)),
 //                        blueHall));
 //        eventService.create(
-//                new Event(eventName, Rate.HIGH, 90, LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(21, 18, 0)),
+//                new EventDTO(eventName, Rate.HIGH, 90, LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(21, 18, 0)),
 //                        redHall));
-//        Event event = new Event(eventName, Rate.HIGH, 150,
+//        EventDTO event = new EventDTO(eventName, Rate.HIGH, 150,
 //                LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(21, 18, 0)), yellowHall);
 //        event = eventService.create(event);
 //

@@ -68,7 +68,7 @@ public class BookingServiceImpl implements BookingService {
             throw new NullPointerException("Seats are [null]");
         }
         if (Objects.isNull(user)) {
-            throw new NullPointerException("User is [null]");
+            throw new NullPointerException("UserDTO is [null]");
         }
         if (seats.contains(null)) {
             throw new NullPointerException("Seats contain [null]");
@@ -125,11 +125,11 @@ public class BookingServiceImpl implements BookingService {
                 isolation = Isolation.SERIALIZABLE)
     public Ticket bookTicket(User user, Ticket ticket) throws IncufficientMoneyException {
         if (Objects.isNull(user)) {
-            throw new NullPointerException("User is [null]");
+            throw new NullPointerException("UserDTO is [null]");
         }
         User foundUser = userService.getById(user.getId());
         if (Objects.isNull(foundUser)) {
-            throw new IllegalStateException("User: [" + user + "] is not registered");
+            throw new IllegalStateException("UserDTO: [" + user + "] is not registered");
         }
 
         List<Ticket> bookedTickets = bookingDAO.getTickets(ticket.getEvent());

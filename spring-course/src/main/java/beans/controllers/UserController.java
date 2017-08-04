@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class UserController {
 
     public static final String USER_LIST_VIEW = "Users";
-    public static final String USER_VIEW = "User";
+    public static final String USER_VIEW = "UserDTO";
 
     @Autowired
     @Qualifier("userServiceImpl")
@@ -50,7 +50,7 @@ public class UserController {
 
     @RequestMapping("/{userId}")
     public String showUser(@PathVariable() Long userId,
-                           @RequestParam(required = false, name = "show_error", defaultValue = "false") boolean showError,
+                           @RequestParam(required = false, value = "show_error", defaultValue = "false") boolean showError,
                            ModelMap model) {
 
         User user = userService.getById(userId);

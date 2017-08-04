@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
+ * UserDTO: Dmytro_Babichev
  * Date: 2/4/2016
  * Time: 10:21 AM
  */
@@ -29,10 +29,10 @@ public interface BookingDAO {
 
     static void validateUser(User user) {
         if (Objects.isNull(user)) {
-            throw new NullPointerException("User is [null]");
+            throw new NullPointerException("UserDTO is [null]");
         }
         if (Objects.isNull(user.getEmail())) {
-            throw new NullPointerException("User email is [null]");
+            throw new NullPointerException("UserDTO email is [null]");
         }
     }
 

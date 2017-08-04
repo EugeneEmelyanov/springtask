@@ -50,12 +50,12 @@ public class EventController {
         return createdEvent;
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = {"application/json", "application/pdf"})
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = {"application/json", "application/pdf"})
     public Event getEvent(@PathVariable("id") long id) {
         return eventService.getById(id);
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE, produces = {"application/json", "application/pdf"})
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = {"application/json", "application/pdf"})
     public void deleteEvent(@PathVariable("id") long id, HttpServletResponse response) {
         eventService.remove(eventService.getById(id));
         response.setStatus(HttpStatus.OK.value());

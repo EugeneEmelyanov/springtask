@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
-@XmlType(name = "User", propOrder = {
+@XmlType(name = "UserDTO", propOrder = {
         "id",
         "name",
         "email",
@@ -21,7 +21,7 @@ import java.time.LocalDate;
         "password",
         "userRoles"
 }, namespace = "http://epam.com/springcourse")
-public class User {
+public class UserDTO {
 
     private long id;
     private String email;
@@ -54,18 +54,18 @@ public class User {
         this.userRoles = userRoles;
     }
 
-    public User() {
+    public UserDTO() {
 
     }
 
-    public User(long id, String email, String name, LocalDate birthday) {
+    public UserDTO(long id, String email, String name, LocalDate birthday) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.birthday = birthday;
     }
 
-    public User(String email, String name, LocalDate birthday) {
+    public UserDTO(String email, String name, LocalDate birthday) {
         this(-1, email, name, birthday);
     }
 
@@ -118,15 +118,15 @@ public class User {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        User user = (User) o;
+        UserDTO userDTO = (UserDTO) o;
 
-        if (id != user.id)
+        if (id != userDTO.id)
             return false;
-        if (email != null ? !email.equals(user.email) : user.email != null)
+        if (email != null ? !email.equals(userDTO.email) : userDTO.email != null)
             return false;
-        if (name != null ? !name.equals(user.name) : user.name != null)
+        if (name != null ? !name.equals(userDTO.name) : userDTO.name != null)
             return false;
-        return birthday != null ? birthday.equals(user.birthday) : user.birthday == null;
+        return birthday != null ? birthday.equals(userDTO.birthday) : userDTO.birthday == null;
 
     }
 
@@ -141,7 +141,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDTO{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +

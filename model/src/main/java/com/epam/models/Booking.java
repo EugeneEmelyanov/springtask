@@ -2,7 +2,7 @@ package com.epam.models;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
+ * UserDTO: Dmytro_Babichev
  * Date: 20/2/16
  * Time: 9:03 PM
  */

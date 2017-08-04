@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDateTime;
 
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
-@XmlType(name = "Event", propOrder = {
+@XmlType(name = "EventDTO", propOrder = {
         "id",
         "name",
         "rate",
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
         "dateTime",
         "auditoriumId"
 }, namespace = "http://epam.com/springcourse/")
-public class Event {
+public class EventDTO {
 
     private long id;
     private String name;

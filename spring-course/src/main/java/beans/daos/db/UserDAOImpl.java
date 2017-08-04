@@ -14,7 +14,7 @@ import java.util.Objects;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
+ * UserDTO: Dmytro_Babichev
  * Date: 20/2/16
  * Time: 4:35 PM
  */
@@ -32,7 +32,7 @@ UserDAOImpl extends AbstractDAO implements UserDAO {
         User byEmail = getByEmail(user.getEmail());
         if (Objects.nonNull(byEmail)) {
             throw new IllegalStateException(
-                    String.format("Unable to store user: [%s]. User with email: [%s] is already created.", user,
+                    String.format("Unable to store user: [%s]. UserDTO with email: [%s] is already created.", user,
                                   user.getEmail()));
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));

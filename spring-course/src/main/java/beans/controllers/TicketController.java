@@ -47,7 +47,7 @@ public class TicketController {
     @RequestMapping("/list")
     public String showTickets(@ModelAttribute("model") ModelMap model) {
 
-//        List<Event> events = eventService.getAll();
+//        List<EventDTO> events = eventService.getAll();
 //
 //        events.stream()
 //                .map(event -> )

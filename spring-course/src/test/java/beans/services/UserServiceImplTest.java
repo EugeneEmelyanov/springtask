@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
+ * UserDTO: Dmytro_Babichev
  * Date: 06/2/16
  * Time: 8:02 PM
  */
@@ -62,7 +62,7 @@ public class UserServiceImplTest {
         User user = new User(email, UUID.randomUUID().toString(), LocalDate.now());
         user.setPassword("asdf");
         long registeredId = userService.register(user).getId();
-        assertEquals("User should be the same", userService.getUserByEmail(email), user.withId(registeredId));
+        assertEquals("UserDTO should be the same", userService.getUserByEmail(email), user.withId(registeredId));
     }
 
     @Test(expected = RuntimeException.class)
@@ -75,7 +75,7 @@ public class UserServiceImplTest {
     public void testRemove() throws Exception {
         User testUser1 = (User) applicationContext.getBean("testUser1");
         userService.remove(testUser1);
-        assertEquals("User should be the same", userService.getUserByEmail(testUser1.getEmail()), null);
+        assertEquals("UserDTO should be the same", userService.getUserByEmail(testUser1.getEmail()), null);
     }
 
     @Test
@@ -95,7 +95,7 @@ public class UserServiceImplTest {
     public void testGetUserByEmail() throws Exception {
         User testUser1 = (User) applicationContext.getBean("testUser1");
         User foundUser = userService.getUserByEmail(testUser1.getEmail());
-        assertEquals("User should match", testUser1, foundUser);
+        assertEquals("UserDTO should match", testUser1, foundUser);
     }
 
     @Test

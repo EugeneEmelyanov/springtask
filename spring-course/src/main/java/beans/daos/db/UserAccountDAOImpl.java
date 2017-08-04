@@ -53,8 +53,8 @@ public class UserAccountDAOImpl extends AbstractDAO implements UserAccountDAO {
 
 
     private void checkUserAccount(final UserAccount userAccount) {
-        Objects.requireNonNull(userAccount, "User account cannot be null");
-        Objects.requireNonNull(userAccount.getUser(), "User for user account cannot be null");
+        Objects.requireNonNull(userAccount, "UserDTO account cannot be null");
+        Objects.requireNonNull(userAccount.getUser(), "UserDTO for user account cannot be null");
         if (userAccount.getPrepaidMoney() <= 0) {
             throw new IllegalArgumentException("Prepaid amount of money cannot be null");
         }

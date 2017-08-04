@@ -12,12 +12,6 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 20/2/16
- * Time: 7:07 PM
- */
 @Repository(value = "eventDAO")
 public class EventDAOImpl extends AbstractDAO implements EventDAO {
 

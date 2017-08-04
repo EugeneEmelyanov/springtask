@@ -29,10 +29,10 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST, produces = {"application/json", "application/pdf"})
     public User createUser(@RequestBody User user) {
-        Objects.requireNonNull(user, "User cannot be blank");
+        Objects.requireNonNull(user, "UserDTO cannot be blank");
         Objects.requireNonNull(user.getBirthday(), "Birthday cannot be blank");
         Objects.requireNonNull(user.getEmail(), "Email cannot be blank");
-        Objects.requireNonNull(user.getName(), "User name cannot be blank");
+        Objects.requireNonNull(user.getName(), "UserDTO name cannot be blank");
         Objects.requireNonNull(user.getPassword(), "Password cannot be blank");
 
         return userService.register(user);

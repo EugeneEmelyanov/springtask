@@ -15,7 +15,7 @@ import java.util.Properties;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
+ * UserDTO: Dmytro_Babichev
  * Date: 20/2/16
  * Time: 4:00 PM
  */

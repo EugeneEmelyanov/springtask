@@ -32,7 +32,7 @@ public class TicketsPdfView extends AbstractITextPdfView {
         table.addCell("Event Name");
         table.addCell("Date");
         table.addCell("Seats");
-        table.addCell("User");
+        table.addCell("UserDTO");
         table.addCell("Price");
 
         List<Ticket> tickets = (List<Ticket>) model.get("tickets");

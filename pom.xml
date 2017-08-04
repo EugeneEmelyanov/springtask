@@ -10,6 +10,7 @@
         <module>spring-course</module>
         <module>restclient</module>
         <module>model</module>
+        <module>soapclient</module>
     </modules>
 
     <groupId>com.epam</groupId>

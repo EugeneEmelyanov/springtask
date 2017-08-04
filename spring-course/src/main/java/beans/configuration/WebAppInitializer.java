@@ -4,6 +4,7 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.ws.transport.http.MessageDispatcherServlet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
@@ -35,6 +36,16 @@ public class WebAppInitializer implements WebApplicationInitializer {
                 dispatcherContext));
         dispatcher.addMapping("/");
         dispatcher.setLoadOnStartup(1);
+
+        dispatcherContext.register(SOAPAppConfig.class);
+        dispatcherContext.setServletContext(container);
+
+        MessageDispatcherServlet servlet = new MessageDispatcherServlet();
+        servlet.setApplicationContext(dispatcherContext);
+        servlet.setTransformWsdlLocations(true);
+        ServletRegistration.Dynamic dynamic = container.addServlet("wsdispatcher",servlet);
+        dynamic.addMapping("/ws/*");
+        dynamic.setLoadOnStartup(1);
     }
 
     private void addFilter(ServletContext container) {
